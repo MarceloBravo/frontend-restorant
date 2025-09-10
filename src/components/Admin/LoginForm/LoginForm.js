@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import {  loginAdmin }    from '../../../axios/login.js'
 import { validaEmail } from '../../../shared'
 import './LoginForm.scss'
+import { setToast } from '../../../store/slices/toastSlice.js'
 
 export const LoginForm = ()=> {
     const [ formData, setFormData ] = useState({email: '',password: ''})
@@ -12,8 +13,15 @@ export const LoginForm = ()=> {
 
 
     useEffect(() => {
-        if(data?.isLogged === true){
-            console.log('usuario logueado exitosamente', data)
+        console.log('usuario logueado exitosamente', data)
+        if(formData.email && formData.password && data.isLogged === false){
+            dispatch(setToast(
+                {toastData:[{
+                    mensaje: 'Usuario o contraseña no válida!', 
+                    titulo: 'Error de autenticación', 
+                    tipo: 'bk-error'
+                }]}
+            ));
         }
     }, [data])
 
@@ -30,7 +38,6 @@ export const LoginForm = ()=> {
             return
         }
         if(formData.email && formData.password ){
-            console.log('formData', formData)
             dispatch(loginAdmin(formData))
         }
     }

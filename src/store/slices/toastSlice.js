@@ -6,8 +6,10 @@ const toastSlice = createSlice({
     initialState: {toastData: []},  
 
     reducers:{
-        toast(state, action){
-            state.toastData.push(...action.payload.toastData)
+        setToast(state, action){
+            const dataToast = action.payload.toastData
+            dataToast.id = (new Date()).getTime()
+            state.toastData.push(...dataToast)
         },
 
         closeToast(state, action){
@@ -18,5 +20,5 @@ const toastSlice = createSlice({
     }
 })
 
-export const { toast, closeToast } = toastSlice.actions
+export const { setToast, closeToast } = toastSlice.actions
 export default toastSlice.reducer
