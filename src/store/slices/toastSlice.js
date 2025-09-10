@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { nanoid } from '@reduxjs/toolkit'
 
 const toastSlice = createSlice({
     name: 'toast',
@@ -8,12 +9,11 @@ const toastSlice = createSlice({
     reducers:{
         setToast(state, action){
             const dataToast = action.payload.toastData
-            dataToast.id = (new Date()).getTime()
-            state.toastData.push(...dataToast)
+            dataToast.id = nanoid()
+            state.toastData.push(dataToast)
         },
 
         closeToast(state, action){
-            console.log(action.payload.id)
             const toastArray = state.toastData.filter(toast => toast.id !== action.payload.id)
             state.toastData = toastArray
         }

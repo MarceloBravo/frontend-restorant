@@ -9,7 +9,7 @@ export const loginAdmin = (formData) => (dispatch) =>{
     }
     ).catch(error => {
         const msg = error.message === 'Network Error' ? 'Error de conección de red' : 'Usuario o contraseña no válida!';
-        dispatch(setToast({toastData:[{mensaje: msg, titulo: 'Error de autenticación', tipo: 'bk-error'}]}));
+        dispatch(setToast({toastData:{mensaje: msg, titulo: 'Error de autenticación', tipo: 'bk-error'}}));
     }
     )
 }  

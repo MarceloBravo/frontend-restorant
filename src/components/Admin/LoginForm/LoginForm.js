@@ -16,11 +16,11 @@ export const LoginForm = ()=> {
         console.log('usuario logueado exitosamente', data)
         if(formData.email && formData.password && data.isLogged === false){
             dispatch(setToast(
-                {toastData:[{
+                {toastData:{
                     mensaje: 'Usuario o contraseña no válida!', 
                     titulo: 'Error de autenticación', 
                     tipo: 'bk-error'
-                }]}
+                }}
             ));
         }
     }, [data])

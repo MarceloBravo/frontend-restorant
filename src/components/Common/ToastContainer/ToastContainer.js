@@ -14,7 +14,6 @@ export const ToastContainer = () =>  {
      * Obtiene los mensajes desde el store y borra los mensajes cuando el componente se desmonta.
     */
     useEffect(() => {
-        console.log(toast)
         setToastArray(toast)   
         // eslint-disable-next-line
     }, [toast])
