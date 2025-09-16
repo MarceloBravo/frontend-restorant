@@ -1,48 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import {  loginAdmin }    from '../../../axios/login.js'
-import { validaEmail } from '../../../shared'
 import './LoginForm.scss'
-import { setToast } from '../../../store/slices/toastSlice.js'
 
-export const LoginForm = ()=> {
-    const [ formData, setFormData ] = useState({email: '',password: ''})
-    const [ formError, setFormError ] = useState({email: '',password: ''})
-    const data = useSelector(state => state.login)
-    const dispatch = useDispatch()
-
-
-    useEffect(() => {
-        console.log('usuario logueado exitosamente', data)
-        if(formData.email && formData.password && data.isLogged === false){
-            dispatch(setToast(
-                {toastData:{
-                    mensaje: 'Usuario o contraseña no válida!', 
-                    titulo: 'Error de autenticación', 
-                    tipo: 'bk-error'
-                }}
-            ));
-        }
-    }, [data])
-
-
-    const handlerOnChange = (e) => {        
-       setFormData({...formData, [e.target.name]: e.target.value})
-       setFormError({...formError, [e.target.name]: e.target.value ? (e.target.name === 'email' && !validaEmail(e.target.value) ? `El email no es válido` : '') : `Campo ${e.target.name} es requerido`})
-    }
-
-
-    const handlerButton = () => {
-        if(!formData.email || !validaEmail(formData.email)){            
-            setFormError({email: `El email no es válido`})
-            return
-        }
-        if(formData.email && formData.password ){
-            dispatch(loginAdmin(formData))
-        }
-    }
-
-
+export const LoginForm = (props)=> {
+    const { formData,formError, handlerOnChange, handlerButton } = props
 
   return (
     <div className='login-form'>
