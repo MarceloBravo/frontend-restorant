@@ -4,7 +4,7 @@ import { AdminUsersList } from "../pages/Admin/AdminUsers/AdminUsersList/AdminUs
 
 const AdminRoutes = [
     {
-        path: '/admin',
+        path: '/admin/home',
         layout: AdminLayout,
         component: AdminHome
     },

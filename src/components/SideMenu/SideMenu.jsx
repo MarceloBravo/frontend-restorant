@@ -9,7 +9,7 @@ export const SideMenu = (props) => {
   return (
     <ul className="nav flex-column side-menu">        
         <li className="nav-item">
-            <NavLink className={"nav-link active " + (selectedMenu === 'home' ? 'mnuActive': '')} to={'/'}  aria-current="page" ><Icon name='home' />Pedidos</NavLink>
+            <NavLink className={"nav-link active " + (selectedMenu === 'home' ? 'mnuActive': '')} to={'/admin/home'}  aria-current="page" ><Icon name='home' />Pedidos</NavLink>
         </li>
         <li className="nav-item">
             <NavLink className={"nav-link " + (selectedMenu === 'mesas' ? 'mnuActive': '')} to={"/"} ><Icon name='table' />Mesas</NavLink>

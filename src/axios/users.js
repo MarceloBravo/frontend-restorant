@@ -4,7 +4,7 @@ import { setError } from '../store/slices/errorSlice';
 
 const host = process.env.REACT_APP_BACKEND_URL;
 
-export const getUsers = (token) = (dispatch)=> {
+export const getUsers = (token) => (dispatch)=> {
     const config = { headers: { Authorization: `Bearer ${token}` }};
     axios.get(`${host}/api/users/`, config).then(resp => {
         console.log(resp.data);

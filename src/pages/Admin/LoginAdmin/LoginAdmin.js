@@ -31,7 +31,7 @@ export default function LoginAdmin() {
     }else if(data.isLogged === true){
         setLocalStorage('access', data.access)
         setLocalStorage('refresh', data.refresh)
-        navigate('/admin')
+        navigate('/admin/home')
     }else{
       setLoading(false) 
     }
@@ -40,7 +40,7 @@ export default function LoginAdmin() {
 
   useEffect(() => {
     if(user.isLogged === undefined){
-      navigate('/admin')
+      navigate('/admin/home')
     }else if( user.isLogged === undefined){
       const access = getLocalStorage('access')
       const refresh = getLocalStorage('refresh')
