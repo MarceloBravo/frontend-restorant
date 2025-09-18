@@ -1,0 +1,17 @@
+.admin-home-container{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    .admin-home-body{
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+
+        .admin-home-content{
+            flex: 1;
+            overflow: auto;
+            padding: 20px;
+        }
+    }
+}

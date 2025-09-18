@@ -1,16 +1,23 @@
-thead{
-    tr{
-        th{
-            text-align: left;
-        }
-    }
-}   
+.main-container{
+    width: -webkit-fill-available;
+    padding: 20px 10px;
 
-tbody{
-    tr{
-        td{
-            vertical-align: middle;
-            text-align: left;
+    table{
+        thead{
+            tr{
+                th{
+                    text-align: left;
+                }
+            }
+        }   
+
+        tbody{
+            tr{
+                td{
+                    vertical-align: middle;
+                    text-align: left;
+                }
+            }
         }
     }
 }

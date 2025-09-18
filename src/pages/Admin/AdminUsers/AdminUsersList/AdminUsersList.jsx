@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { SideMenu, TopMenu } from '../../../../components'
 import { getUsers } from '../../../../axios/users'
 import { useDispatch, useSelector } from 'react-redux'
 import { getLocalStorage } from '../../../../shared/storage'
@@ -17,15 +16,10 @@ export const AdminUsersList = () => {
 
   useEffect(()=> {
     setUsers(data.users ?? [])
-    console.log(data.users)
   },[data.users])
 
 
   return (
-    <div className="admin-home-container">
-      <TopMenu />
-      <div className="admin-home-body">
-        <SideMenu selectedMenu={'usuarios'}/>
         <div className="main-container">
           <div>Este es AdminUsersList</div>
 
@@ -50,7 +44,5 @@ export const AdminUsersList = () => {
           </tbody>
           </table>
         </div>
-      </div>
-    </div>
   )
 }

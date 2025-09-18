@@ -6,17 +6,19 @@ const AdminRoutes = [
     {
         path: '/admin/home',
         layout: AdminLayout,
-        component: AdminHome
+        component: AdminHome,
+        menu: 'home'
     },
     {
         path: '/admin/login',
-        layout: AdminLayout,
+        layout: null,
         component: LoginAdmin
     },
     {
         path: '/admin/users',
         layout: AdminLayout,
-        component: AdminUsersList
+        component: AdminUsersList,
+        menu: 'usuarios'
     }
 ];
 
