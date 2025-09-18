@@ -1,4 +1,3 @@
-import { EmptyLayout } from "../layouts";
 import { Page404 } from "../pages";
 
 const CommonRoutes = [
