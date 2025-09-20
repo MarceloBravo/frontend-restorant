@@ -1,0 +1,40 @@
+.Search-bar{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .new-record{
+        .btn{
+            padding: 5px 15px;
+        }
+    }
+
+    .search-record{
+        .input{
+            width: 300px;
+        }
+    }
+}
+
+table{
+    thead{
+        tr{
+            th{
+                text-align: left;
+            }
+        }
+    }   
+
+    tbody{
+        tr{
+            td{
+                vertical-align: middle;
+                text-align: left;
+
+                .btn-edit{
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+}

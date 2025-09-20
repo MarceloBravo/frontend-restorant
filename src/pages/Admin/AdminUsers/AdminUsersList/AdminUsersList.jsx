@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react'
 import { getUsers } from '../../../../axios/users'
 import { useDispatch, useSelector } from 'react-redux'
 import { getLocalStorage } from '../../../../shared/storage'
+import { Grid } from '../../../../components/Grid'
 import './AdminUsersList.scss'
 
 export const AdminUsersList = () => {
+  const[ textoBuscado, setTextoBuscado ] = useState('')
   const [users, setUsers] = useState([])
   const data = useSelector(state => state.users)
   const dispatch = useDispatch()
@@ -18,31 +20,40 @@ export const AdminUsersList = () => {
     setUsers(data.users ?? [])
   },[data.users])
 
+  const handlerBtnNuevoClick = (e) => {
+    e.preventDefault()
+    console.log('Nuevo usuario')
+  }
+
+  const handlerEditarClick = (id) => {
+    console.log('Editar usuario', id)
+  }
+
+  const handlerEliminarClick = (id) => {
+    console.log('Eliminar usuario', id)
+  }
+
+  const handlerInputBuscarChange = (e) => {
+    console.log('Buscar usuario', e.target.value)
+  }
+
+
 
   return (
         <div className="main-container">
           <div>Este es AdminUsersList</div>
-
-          <table className='table table-users'>
-            <thead>
-              <tr>
-                <th scope='col'>Username</th>
-                <th scope='col'>Email</th>
-                <th scope='col'>First Name</th>
-                <th scope='col'>Last Name</th>
-              </tr>
-          </thead>
-          <tbody>
-          {users.length > 0 && data.users.map((user) => (
-            <tr key={user.id}>
-              <td>{user.username}</td>
-              <td>{user.email}</td>
-              <td>{user.first_name}</td>  
-              <td>{user.last_name}</td>
-            </tr>
-          ))}
-          </tbody>
-          </table>
+          <Grid 
+            data={users} 
+            headers={['ID', 'Nombre', 'Apellido', 'Usuario', 'Email', 'Activo', 'Staff']} 
+            fields={['id', 'first_name', 'last_name', 'username', 'email', 'is_active', 'is_staff']} 
+            btnText={"Nuevo Usuario"}
+            placeholderText={"Buscar usuario..."}
+            handlerBtnNuevoClick={handlerBtnNuevoClick}
+            handlerInputBuscarChange={handlerInputBuscarChange}
+            handlerEditarClick={handlerEditarClick}
+            handlerEliminarClick={handlerEliminarClick}
+          />
+          
         </div>
   )
 }
