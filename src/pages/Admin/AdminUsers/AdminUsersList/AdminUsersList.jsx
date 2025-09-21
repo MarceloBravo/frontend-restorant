@@ -6,13 +6,17 @@ import { Grid } from '../../../../components/Grid'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import './AdminUsersList.scss'
+import { resetUser } from '../../../../store/slices/usersSlices'
+import { openModal } from '../../../../store/slices/ModalSlices'
 
 const AdminUsersList = () => {
   const [ textoBuscado, setTextoBuscado ] = useState('')
   const [ eliminado, setEliminado ] = useState(false)
   const [users, setUsers] = useState([])
+  const [ deleteId, setDeleteId ] = useState(null)
   const data = useSelector(state => state.users.users)
   const status = useSelector(state => state.status)
+  const modal = useSelector(state => state.modal)
   const access = getLocalStorage('access')
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -28,6 +32,7 @@ const AdminUsersList = () => {
   
 
   useEffect(() => {
+    console.log('Status -->', status, 'eliminado -->', eliminado)
     if(!status)return
     if(eliminado && status.code === 204){
       toast.success('Usuario eliminado con éxito')
@@ -41,19 +46,34 @@ const AdminUsersList = () => {
   useEffect(() => {
     console.log('Status -->', status)
   },[status?.code])
+  
+  useEffect(() => {
+    if(modal.isOkClicked){  //Se seleccionó el botón de aceptar en el modal
+      dispatch(deleteUser(deleteId, access))
+      setEliminado(true)
+    }
+  },[modal])
+
 
   const handlerBtnNuevoClick = (e) => {
     e.preventDefault()
+    dispatch(resetUser())
     navigate('/admin/users/nuevo')
   }
+
 
   const handlerEditarClick = (id) => {
     navigate(`/admin/users/${id}`)
   }
 
   const handlerEliminarClick = (id) => {
-    dispatch(deleteUser(id, access))
-    setEliminado(true)
+    dispatch(openModal({
+      title: 'Eliminar usuario', 
+      message: '¿Está seguro que desea eliminar este usuario?', 
+      btnAceptarText: 'Eliminar', 
+      isOpen: true
+    }))
+    setDeleteId(id)
   }
 
   const handlerInputBuscarChange = (e) => {

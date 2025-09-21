@@ -1,10 +1,11 @@
-import React, { use, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteUser, getUserById, saveUser } from '../../../../axios/users'
 import { getLocalStorage } from '../../../../shared/storage'
 import { clearError } from '../../../../store/slices/statusSlice'
 import { toast } from 'react-toastify'
+import { openModal } from '../../../../store/slices/ModalSlices'
 
 import './AdminUsersForm.scss'
 
@@ -24,6 +25,7 @@ const AdminUsersForm = () => {
     const access = getLocalStorage('access')
     const user = useSelector(state => state.users.user)
     const status = useSelector(state => state.status)
+    const modal = useSelector(state => state.modal)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -67,6 +69,24 @@ const AdminUsersForm = () => {
         
     }, [ status])
 
+
+    /**
+     * Lectura de la opción seleccionada en el modal
+     * Obtiene la opción seleccionada por el usuario en el modal de eliminación (Cancelar o Eliminar) 
+     * y ejecuta la acción correspondiente
+     */
+    useEffect(() => {
+        if(modal.isOkClicked){  //Se seleccionó el botón de aceptar en el modal
+            if(accion === 'Nuevo' || accion === 'Editar'){
+                // Grabar datos
+                dispatch(saveUser(formData, access))
+            }else if(accion === 'Eliminar'){
+                // Eliminar usuario
+                dispatch(deleteUser(id, access))
+            }
+        }
+    },[modal])
+
     
     const handlerInputChange = (e) => {
         const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
@@ -81,17 +101,27 @@ const AdminUsersForm = () => {
     }
 
     const handlerGrabarClick = () => {
+        // Configura la acción a realizar (nuevo o editar)
         setAccion(id ? 'Editar' : 'Nuevo')
         // Validar datos
         if(!validaDatos()) return
-        // Grabar datos
-        dispatch(saveUser(formData, access))
+        // Abrir modal
+        dispatch(openModal({
+            title: accion === 'Nuevo' ? 'Nuevo usuario' : 'Editar usuario', 
+            message: accion === 'Nuevo' ? '¿Desea crear el nuevo usuario?' :'¿Está seguro que desea guardar los cambios?', 
+            btnAceptarText: 'Guardar', 
+            isOpen: true})
+        )
     }
 
     const handlerEliminarClick = () => {
         setAccion('Eliminar')
-        // Eliminar usuario
-        dispatch(deleteUser(id, access))
+        dispatch(openModal({
+            title: 'Eliminar usuario', 
+            message: '¿Está seguro que desea eliminar este usuario?', 
+            btnAceptarText: 'Eliminar', 
+            isOpen: true
+        }))
     }
 
     const validaDatos = () => {

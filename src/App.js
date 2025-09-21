@@ -1,7 +1,7 @@
-import './App.css';
+import { Modal } from './components';
 import Navigation from './routes/Navigation';
-//import { ToastContainer } from './components/Common/index.js'
 import { ToastContainer } from 'react-toastify';
+import './App.css';
 
 function App() {
   return (
@@ -18,6 +18,7 @@ function App() {
         pauseOnHover={false}
       />
       <Navigation />
+      <Modal/>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import loginSlice from "./slices/loginSlices"
 import toastSlice from "./slices/toastSlice"
 import statusSlice from "./slices/statusSlice"
 import usersSlice from "./slices/usersSlices"
+import modalSlice from "./slices/ModalSlices"
 
 const store = configureStore({
     reducer:{
@@ -10,6 +11,7 @@ const store = configureStore({
         toast: toastSlice,
         status: statusSlice,
         users: usersSlice,
+        modal: modalSlice,
     }
 })
 

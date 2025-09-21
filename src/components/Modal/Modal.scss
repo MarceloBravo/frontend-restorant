@@ -1,0 +1,21 @@
+.modal{
+    display: block !important;
+    background-color: #0000007a;
+
+    .modal-dialog{
+        .modal-content{
+            .modal-header{
+                background-color: #0d6efd;
+                color: white;
+                justify-content: space-between;
+
+                .close{
+                    background-color: white;
+                    border: 1px solid white;
+                    border-radius: 10%;
+
+                }
+            }
+        }
+    }
+}
