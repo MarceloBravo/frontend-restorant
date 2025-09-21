@@ -7,7 +7,7 @@ import { getLocalStorage, setLocalStorage } from '../../../shared/storage.js'
 import { useNavigate } from 'react-router-dom'
 import { LoginForm } from '../../../components/Admin'
 import { useUser } from '../../../Hooks/useUser.js';
-import { setError } from '../../../store/slices/errorSlice.js';
+import { setError } from '../../../store/slices/statusSlice.js';
 
 import "./LoginAdmin.scss"
 
@@ -25,7 +25,7 @@ export default function LoginAdmin() {
 
   useEffect(() => {
     setLoading(false)
-    if(error.message !== null){
+    if(error && error.message !== null){
         toast.error('Usuario o contraseña no válida!')   
         dispatch(setError({message: null, code: null}))        
     }else if(data.isLogged === true){

@@ -1,6 +1,6 @@
 import { AdminLayout } from "../layouts";
-import { AdminHome, LoginAdmin } from "../pages";
-import { AdminUsersList } from "../pages/Admin/AdminUsers/AdminUsersList/AdminUsersList";
+import { AdminHome, AdminUsersList, AdminUsersForm, LoginAdmin } from "../pages";
+//import { AdminUsersList } from "../pages/Adin/AdminUsers/AdminUsersList/AdminUsersList";
 
 const AdminRoutes = [
     {
@@ -19,7 +19,19 @@ const AdminRoutes = [
         layout: AdminLayout,
         component: AdminUsersList,
         menu: 'usuarios'
-    }
+    },
+    {
+        path: '/admin/users/:id',
+        layout: AdminLayout,
+        component: AdminUsersForm,
+        menu: 'usuarios'
+    },
+    {
+        path: '/admin/users/nuevo',
+        layout: AdminLayout,
+        component: AdminUsersForm,
+        menu: 'usuarios'
+    },
 ];
 
 export default AdminRoutes;

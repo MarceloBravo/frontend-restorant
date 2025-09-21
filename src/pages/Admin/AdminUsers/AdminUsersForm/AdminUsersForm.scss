@@ -1,0 +1,38 @@
+
+.form-page{
+    width: 80%;
+
+    .admin-users-form{
+        margin: 0 auto;
+        width: 50%;
+    }
+
+    .admin-users-form-container{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 10px;
+
+        .row{
+            .col-form-label{
+                text-align: left;
+            }
+
+            .col-sm-9{
+                text-align: left;
+            }
+        }
+
+        .btn-container{
+            display: flex;
+            justify-content: right;
+            gap: 10px;
+
+            .btn{
+                width: 100px;
+            }
+        }
+
+        
+    }
+}

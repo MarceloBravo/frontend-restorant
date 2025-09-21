@@ -1,39 +1,63 @@
 import { useEffect, useState } from 'react'
-import { getUsers } from '../../../../axios/users'
+import { deleteUser, getUsers } from '../../../../axios/users'
 import { useDispatch, useSelector } from 'react-redux'
 import { getLocalStorage } from '../../../../shared/storage'
 import { Grid } from '../../../../components/Grid'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import './AdminUsersList.scss'
 
-export const AdminUsersList = () => {
-  const[ textoBuscado, setTextoBuscado ] = useState('')
+const AdminUsersList = () => {
+  const [ textoBuscado, setTextoBuscado ] = useState('')
+  const [ eliminado, setEliminado ] = useState(false)
   const [users, setUsers] = useState([])
-  const data = useSelector(state => state.users)
+  const data = useSelector(state => state.users.users)
+  const status = useSelector(state => state.status)
+  const access = getLocalStorage('access')
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
 
   useEffect(()=>{
-    dispatch(getUsers(getLocalStorage('access')))
+      dispatch(getUsers(getLocalStorage('access')))
   },[dispatch])
 
+  
   useEffect(()=> {
-    setUsers(data.users ?? [])
-  },[data.users])
+    setUsers(data ?? [])
+  },[data])
+  
+
+  useEffect(() => {
+    if(!status)return
+    if(eliminado && status.code === 204){
+      toast.success('Usuario eliminado con éxito')
+      dispatch(getUsers(getLocalStorage('access')))
+      setEliminado(false)
+    }else if(status.message !== null ) {
+      toast.success(status.message)
+    }
+  },[status?.code, eliminado])
+
+  useEffect(() => {
+    console.log('Status -->', status)
+  },[status?.code])
 
   const handlerBtnNuevoClick = (e) => {
     e.preventDefault()
-    console.log('Nuevo usuario')
+    navigate('/admin/users/nuevo')
   }
 
   const handlerEditarClick = (id) => {
-    console.log('Editar usuario', id)
+    navigate(`/admin/users/${id}`)
   }
 
   const handlerEliminarClick = (id) => {
-    console.log('Eliminar usuario', id)
+    dispatch(deleteUser(id, access))
+    setEliminado(true)
   }
 
   const handlerInputBuscarChange = (e) => {
+    setTextoBuscado(e.target.value)
     console.log('Buscar usuario', e.target.value)
   }
 
@@ -41,7 +65,7 @@ export const AdminUsersList = () => {
 
   return (
         <div className="main-container">
-          <div>Este es AdminUsersList</div>
+          <h1>Listado de usuarios</h1>
           <Grid 
             data={users} 
             headers={['ID', 'Nombre', 'Apellido', 'Usuario', 'Email', 'Activo', 'Staff']} 
@@ -57,3 +81,5 @@ export const AdminUsersList = () => {
         </div>
   )
 }
+
+export default AdminUsersList;
