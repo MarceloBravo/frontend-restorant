@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { getLocalStorage, setLocalStorage } from '../../../shared/storage.js'
 import { useNavigate } from 'react-router-dom'
 import { LoginForm } from '../../../components/Admin'
-import { useUser } from '../../../Hooks/useUser.js';
+import { useCheckSession } from '../../../Hooks/useCheckSession.js';
 import { setError } from '../../../store/slices/statusSlice.js';
 
 import "./LoginAdmin.scss"
@@ -20,7 +20,7 @@ export default function LoginAdmin() {
   const error = useSelector(state => state.error)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const user = useUser()
+  const user = useCheckSession()
 
 
   useEffect(() => {

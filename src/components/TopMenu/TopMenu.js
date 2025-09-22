@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux'
 import { ReactComponent as ExitSvg }  from '../../assets/svg/exit.svg'
-import { useUser } from '../../Hooks'
+import { useCheckSession } from '../../Hooks'
 import { logOut } from '../../store/slices/loginSlices'
 
 import { useNavigate } from 'react-router-dom'
@@ -8,7 +8,7 @@ import { clearLocalStorage } from '../../shared/storage'
 import './TopMenu.scss'
 
 export const TopMenu = () => {
-    const userData = useUser()
+    const userData = useCheckSession()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     
