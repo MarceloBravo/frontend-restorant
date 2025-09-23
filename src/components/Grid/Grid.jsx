@@ -8,13 +8,13 @@ export const Grid = (props) => {
     const [ columnas, setColumnas ] = useState(fields ?? [])
 
     useEffect(() => {
-        if(data.length > 0 && !headers){
+        if(data?.length > 0 && !headers){
             setCabeceras(headers ?? Object.keys(data[0]));
         }else{
             setCabeceras(headers ?? [])
         }
 
-        if(data.length > 0 && !fields){
+        if(data?.length > 0 && !fields){
             setColumnas(fields ?? Object.keys(data[0]))
         }else{
             setColumnas(fields ?? [])
@@ -50,31 +50,33 @@ export const Grid = (props) => {
             </div>
           </div>}
 
-          <div style={{ overflowX: 'auto' }}>
-            <table className='table table-users'>
-              <thead>
-                <tr>
-                  {cabeceras.length > 0 && cabeceras.map((header, index) => (
-                    <th key={index} scope='col'>{header}</th>
-                  ))}
-                  <th scope='col'>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-            {data.length > 0 && data.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                  {Object.keys(row).length > 0 && Object.keys(row).map((col, colIndex) => (
-                      columnas.indexOf(col) > -1 && <td key={colIndex}>{formateValue(row[columnas[columnas.indexOf(col)]])}</td>
-                  ))}
-                  <td className="actions">
-                      <button className="btn btn-sm btn-primary btn-edit" title="Editar" onClick={() =>handlerEditarClick(row[columnas[0]])}><Icon name='edit'/></button>
-                      <button className="btn btn-sm btn-danger" title="Eliminar" onClick={() => handlerEliminarClick(row[columnas[0]])}><Icon name='trash'/></button>
-                  </td>
-              </tr>
-            ))}
-            </tbody>
-          </table>
-        </div>
+          <div style={{ overflowY: 'auto', maxHeight: 'calc(100vh - 250px)' }}>
+            <div style={{ overflowX: 'auto' }}>
+              <table className='table table-users'>
+                <thead>
+                  <tr>
+                    {cabeceras.length > 0 && cabeceras.map((header, index) => (
+                      <th key={index} scope='col'>{header}</th>
+                    ))}
+                    <th scope='col'>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {data?.length > 0 && data?.map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                      {Object.keys(row).length > 0 && Object.keys(row).map((col, colIndex) => (
+                          columnas.indexOf(col) > -1 && <td key={colIndex}>{formateValue(row[columnas[colIndex-1]])}</td>
+                      ))}
+                      <td className="actions">
+                          <button className="btn btn-sm btn-primary btn-edit" title="Editar" onClick={() =>handlerEditarClick(row[columnas[0]])}><Icon name='edit'/></button>
+                          <button className="btn btn-sm btn-danger" title="Eliminar" onClick={() => handlerEliminarClick(row[columnas[0]])}><Icon name='trash'/></button>
+                      </td>
+                  </tr>
+                ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
     </>
   )
 }

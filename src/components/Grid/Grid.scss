@@ -38,3 +38,27 @@ table{
         }
     }
 }
+
+.table-fixed-header {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+
+    thead {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    tbody.table-body-scroll {
+        display: block;
+        max-height: calc(100vh - 300px); 
+        overflow-y: auto;
+        
+        tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+    }
+}

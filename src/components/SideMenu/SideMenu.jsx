@@ -18,7 +18,7 @@ export const SideMenu = (props) => {
             <NavLink className={"nav-link " + (selectedMenu === 'pagos' ? 'mnuActive': '')} to={"/"} ><Icon name='history' />Historial de pagos</NavLink>
         </li>
         <li className="nav-item">
-            <NavLink className={"nav-link " + (selectedMenu === 'categorias' ? 'mnuActive': '')} to={"/"} ><Icon name='folder' />Categorías</NavLink>
+            <NavLink className={"nav-link " + (selectedMenu === 'categorias' ? 'mnuActive': '')} to={"/admin/categorias"} ><Icon name='folder' />Categorías</NavLink>
         </li>
         <li className="nav-item">
             <NavLink className={"nav-link " + (selectedMenu === 'productos' ? 'mnuActive': '')} to={"/"} ><Icon name='cart' />Productos</NavLink>

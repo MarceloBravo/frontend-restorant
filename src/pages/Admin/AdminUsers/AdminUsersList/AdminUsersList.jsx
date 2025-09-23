@@ -5,9 +5,10 @@ import { getLocalStorage } from '../../../../shared/storage'
 import { Grid } from '../../../../components/Grid'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import './AdminUsersList.scss'
 import { resetUser } from '../../../../store/slices/usersSlices'
 import { openModal } from '../../../../store/slices/ModalSlices'
+
+import './AdminUsersList.scss'
 
 const AdminUsersList = () => {
   const [ textoBuscado, setTextoBuscado ] = useState('')

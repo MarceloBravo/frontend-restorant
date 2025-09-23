@@ -1,5 +1,5 @@
 import { AdminLayout } from "../layouts";
-import { AdminHome, AdminUsersList, AdminUsersForm, LoginAdmin } from "../pages";
+import { AdminHome, AdminUsersList, AdminUsersForm, LoginAdmin, CategoriasList } from "../pages";
 //import { AdminUsersList } from "../pages/Adin/AdminUsers/AdminUsersList/AdminUsersList";
 
 const AdminRoutes = [
@@ -31,6 +31,12 @@ const AdminRoutes = [
         layout: AdminLayout,
         component: AdminUsersForm,
         menu: 'usuarios'
+    },
+    {
+        path: '/admin/categorias',
+        layout: AdminLayout,
+        component: CategoriasList,
+        menu: 'categorias'
     },
 ];
 
