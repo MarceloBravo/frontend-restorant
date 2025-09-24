@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import './Grid.scss'
 
 export const Grid = (props) => {
-    const { sinBusqueda, data, headers, fields, btnText, placeholderText, handlerBtnNuevoClick, handlerInputBuscarChange, handlerEditarClick, handlerEliminarClick } = props;
+    const { sinBusqueda, data, headers, fields, types, btnText, placeholderText, handlerBtnNuevoClick, handlerInputBuscarChange, handlerEditarClick, handlerEliminarClick } = props;
     const [ cabeceras, setCabeceras ] = useState(headers ?? [])
     const [ columnas, setColumnas ] = useState(fields ?? [])
 
@@ -19,15 +19,36 @@ export const Grid = (props) => {
         }else{
             setColumnas(fields ?? [])
         }
+        // eslint-disable-next-line
     }, [data]);
 
 
-    const formateValue = (value) => {
-        if(typeof value === 'boolean'){
-            return value ? 'Sí' : 'No'
-        }
-        return value
+    const formateValue = (row, col) => {
+      const value = row[columnas[col]]
+      if(types?.length && Object.keys(row).length === types.length){
+        return formatearValor(value, types[col])
+      }else{
+        return formatearValor(value)
+      }
     }
+
+
+    const formatearValor = (value, type = null) => {
+      const tipo = type || typeof value    
+      switch(tipo){
+        case 'image':
+          return <img src={value} alt="preview" style={{"maxWidth": "100px", "height": "100px"}}/>
+        case 'boolean':
+          return value ? 'Sí' : 'No'
+        case 'date':
+        case 'number':
+        case 'text':
+          return value
+        default:
+          return value
+      }
+    }
+
     
   return (
     <>
@@ -65,7 +86,7 @@ export const Grid = (props) => {
                 {data?.length > 0 && data?.map((row, rowIndex) => (
                   <tr key={rowIndex}>
                       {Object.keys(row).length > 0 && Object.keys(row).map((col, colIndex) => (
-                          columnas.indexOf(col) > -1 && <td key={colIndex}>{formateValue(row[columnas[colIndex-1]])}</td>
+                          columnas.indexOf(col) > -1 && <td key={colIndex}>{formateValue(row, colIndex)}</td>
                       ))}
                       <td className="actions">
                           <button className="btn btn-sm btn-primary btn-edit" title="Editar" onClick={() =>handlerEditarClick(row[columnas[0]])}><Icon name='edit'/></button>
@@ -80,6 +101,5 @@ export const Grid = (props) => {
     </>
   )
 }
-
 
 export default Grid;

@@ -1,5 +1,6 @@
 import { AdminLayout } from "../layouts";
 import { AdminHome, AdminUsersList, AdminUsersForm, LoginAdmin, CategoriasList } from "../pages";
+import CategoriasForm from "../pages/Admin/Categorias/CategoriasForm/CategoriasForm";
 //import { AdminUsersList } from "../pages/Adin/AdminUsers/AdminUsersList/AdminUsersList";
 
 const AdminRoutes = [
@@ -36,6 +37,18 @@ const AdminRoutes = [
         path: '/admin/categorias',
         layout: AdminLayout,
         component: CategoriasList,
+        menu: 'categorias'
+    },
+    {
+        path: '/admin/categorias/:id',
+        layout: AdminLayout,
+        component: CategoriasForm,
+        menu: 'categorias'
+    },
+    {
+        path: '/admin/categorias/nuevo',
+        layout: AdminLayout,
+        component: CategoriasForm,
         menu: 'categorias'
     },
 ];

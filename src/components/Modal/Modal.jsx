@@ -31,7 +31,7 @@ export const Modal = () => {
   return (
     <>
     {
-    modal.isOpen && <div className="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    modal.isOpen && <div className="modal" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel">
         <div className="modal-dialog" role="document">
             <div className="modal-content">
                 {titulo && <div className="modal-header">
