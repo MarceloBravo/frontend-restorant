@@ -49,9 +49,10 @@ const AdminUsersList = () => {
   },[status?.code])
   
   useEffect(() => {
-    if(modal.isOkClicked){  //Se seleccionó el botón de aceptar en el modal
+    if(modal.isOkClicked && deleteId){  //Se seleccionó el botón de aceptar en el modal
       dispatch(deleteUser(deleteId, access))
       setEliminado(true)
+      setDeleteId(null)
     }
   },[modal])
 

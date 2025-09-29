@@ -51,6 +51,7 @@ export const saveUser = (user, token) => (dispatch) => {
 }
 
 export const deleteUser = (id, token) => (dispatch) => {
+    debugger
     const config = { headers: { Authorization: `Bearer ${token}` }};
     axios.delete(`${host}/api/users/${id}/`, config).then(resp => {
         dispatch(setUser({user: null}));
