@@ -4,8 +4,11 @@ import { setError, setStatus } from '../store/slices/statusSlice';
 
 const host = process.env.REACT_APP_BACKEND_URL;
 
-export const getUsers = (token) => (dispatch)=> {
-    const config = { headers: { Authorization: `Bearer ${token}` }};
+export const getUsers = (token, searchTerm = '') => (dispatch)=> {
+    const config = {
+        headers: { Authorization: `Bearer ${token}` },
+        params: searchTerm ? {search: searchTerm} : {}
+    };
     axios.get(`${host}/api/users/`, config).then(resp => {
         dispatch(setUsers({users: resp.data}));
         dispatch(setStatus({code: resp.status, message: null}));

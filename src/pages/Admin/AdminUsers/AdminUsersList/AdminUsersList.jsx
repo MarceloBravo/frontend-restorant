@@ -28,12 +28,12 @@ const AdminUsersList = () => {
 
   
   useEffect(()=> {
+    console.log('data', data)
     setUsers(data ?? [])
   },[data])
   
 
   useEffect(() => {
-    console.log('Status -->', status, 'eliminado -->', eliminado)
     if(!status)return
     if(eliminado && status.code === 204){
       toast.success('Usuario eliminado con éxito')
@@ -44,9 +44,6 @@ const AdminUsersList = () => {
     }
   },[status?.code, eliminado])
 
-  useEffect(() => {
-    console.log('Status -->', status)
-  },[status?.code])
   
   useEffect(() => {
     if(modal.isOkClicked && deleteId){  //Se seleccionó el botón de aceptar en el modal
@@ -79,8 +76,12 @@ const AdminUsersList = () => {
   }
 
   const handlerInputBuscarChange = (e) => {
+    e.preventDefault();
     setTextoBuscado(e.target.value)
-    console.log('Buscar usuario', e.target.value)
+    if(e.key === 'Enter'){
+      console.log('Buscando...', textoBuscado)
+         dispatch(getUsers(getLocalStorage('access'), textoBuscado))
+    }
   }
 
 
@@ -90,6 +91,7 @@ const AdminUsersList = () => {
           <h1>Listado de usuarios</h1>
           <Grid 
             data={users} 
+            searchValue={textoBuscado} 
             headers={['ID', 'Nombre', 'Apellido', 'Usuario', 'Email', 'Activo', 'Staff']} 
             fields={['id', 'first_name', 'last_name', 'username', 'email', 'is_active', 'is_staff']} 
             btnText={"Nuevo Usuario"}

@@ -8,7 +8,6 @@ export const getCategorias = async (searchTerm = '') => {
             params.search = searchTerm;
         }
         const resp = await axios.get(host+ '/api/categories/', { params });
-        console.log('axios',resp.data);
         // Si la respuesta es un objeto con la propiedad 'results' (común en respuestas paginadas o de búsqueda de DRF),
         // devolvemos solo el array de resultados. De lo contrario, devolvemos la data tal cual.
         if (resp.data && Array.isArray(resp.data.results)) {
