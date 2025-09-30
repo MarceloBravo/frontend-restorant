@@ -12,6 +12,7 @@ import './CategoriasList.scss'
 
 const CategoriasList = () => {
     const [ deletedId, setDeleteId ] = useState(null)
+    const [ searchTerm, setSearchTerm ] = useState('');
     const { loading, categorias, status, listarCategorias, eliminarCategoria } = useCategorias();
     const modal = useSelector(state => state.modal)
     const dispatch = useDispatch();
@@ -25,14 +26,23 @@ const CategoriasList = () => {
 
     
     useEffect(() => {
-        if(deletedId && !modal.isOpen && modal.isOkClicked){  //Se seleccionó el botón de aceptar en el modal
-            eliminarCategoria(deletedId)
-            .then((resp) => toast.success(resp.message))
-            .catch((err) => toast.error(err.message))
-            .finally(() => listarCategorias())  
+        // Se ejecuta solo cuando el usuario hace clic en "Aceptar" en el modal de confirmación.
+        if (modal.isOkClicked && deletedId) { // 1. El usuario confirma la eliminación
+            eliminarCategoria(deletedId); // 2. Se llama a la función del hook (que no devuelve nada)
         }
         // eslint-disable-next-line
-    },[modal.isOpen])
+    }, [modal.isOkClicked]); // Dependemos de isOkClicked para disparar la acción
+
+    useEffect(() => {
+        // 3. Este efecto reacciona al cambio de 'status' provocado por eliminarCategoria
+        if (status.code >= 200 && status.code < 300 && status.message.includes('eliminada')) {
+            toast.success(status.message);
+            listarCategorias(); // Recargamos la lista solo después de una eliminación exitosa
+        } else if (status.code >= 400) { // Manejo de errores genérico
+            toast.error(status.message);
+        }
+        // eslint-disable-next-line
+    }, [status]);
 
 
     const handlerBtnNuevoClick = (e) => {
@@ -45,8 +55,10 @@ const CategoriasList = () => {
     }   
 
     const handlerInputBuscarChange  = (e) => {
-        console.log('Buscar usuario', e.target.value)
-    }
+        e.preventDefault();
+        setSearchTerm(e.target.value);
+        if(e.key === 'Enter') listarCategorias(searchTerm);
+    };
 
     const handlerEliminarClick = (id) => {
         dispatch(openModal({
@@ -59,7 +71,6 @@ const CategoriasList = () => {
     }
 
     if(loading) return (<Loader active inline='centered'>Cargando ...</Loader>)
-    if(status.code < 200 || status.code > 299) toast.error(status.message)
 
     return (
         <div className="main-container">
@@ -71,6 +82,7 @@ const CategoriasList = () => {
                 types={['number', 'text', 'text', 'image', 'date', 'date']}
                 btnText={"Nueva categoría"}
                 placeholderText={"Buscar categoría..."}
+                searchValue={searchTerm}
                 handlerBtnNuevoClick={handlerBtnNuevoClick}
                 handlerInputBuscarChange={handlerInputBuscarChange}
                 handlerEditarClick={handlerEditarClick}

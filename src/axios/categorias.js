@@ -1,10 +1,20 @@
 import axios from 'axios'
 const host = process.env.REACT_APP_BACKEND_URL;
 
-export const getCategorias = async () => {
+export const getCategorias = async (searchTerm = '') => {
     try{
-        const resp = await axios.get(host+ '/api/categories/');
-        return resp.data;
+        const params = {};
+        if (searchTerm) {
+            params.search = searchTerm;
+        }
+        const resp = await axios.get(host+ '/api/categories/', { params });
+        console.log('axios',resp.data);
+        // Si la respuesta es un objeto con la propiedad 'results' (común en respuestas paginadas o de búsqueda de DRF),
+        // devolvemos solo el array de resultados. De lo contrario, devolvemos la data tal cual.
+        if (resp.data && Array.isArray(resp.data.results)) {
+            return resp.data.results;
+        }
+        return resp.data; // Para el caso en que la respuesta ya es un array.
     }catch(err){
         console.log(err);
         return [];
@@ -30,14 +40,14 @@ export const updateCategory = async (category, token) => {
                 formData.append(key, category[key]);
             }
         }
-
+        /*
         // If the image is a string (URL), it should not be sent as we are using FormData now.
         // The backend will interpret it as a file upload attempt.
         // Only file objects should be sent.
         if (typeof category.image === 'string') {
             formData.delete('image');
         }
-
+        */
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`,

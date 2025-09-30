@@ -8,10 +8,10 @@ export const useCategorias = () => {
     const [status, setStatus] = useState({ code: 0, message: null });
     const [categoria, setCategoria] = useState(null);
 
-    const listarCategorias = async () => {
+    const listarCategorias = async (searchTerm = '') => {
         try {
             setLoading(true);
-            const response = await getCategoriasApi();
+            const response = await getCategoriasApi(searchTerm);
             setCategorias(response);
             setStatus({ code: 200, message: 'ok' });
         } catch (err) {
@@ -47,15 +47,11 @@ export const useCategorias = () => {
             delete dataToSubmit.imagePreview;
 
             const response = await createCategory(dataToSubmit, getLocalStorage('access'));
-            const resp = { code: response.status ?? 201, message: 'Categoría creada' }
-            setLoading(false);
-            setStatus(resp);
-            return resp;
+            setStatus({ code: response.status ?? 201, message: 'Categoría creada' });
         } catch (err) {
-            const resp = { code: err.response?.status || 500, message: 'Error al crear la categoría' }
+            setStatus({ code: err.response?.status || 500, message: 'Error al crear la categoría' });
+        } finally {
             setLoading(false);
-            setStatus(resp);
-            return resp;
         }
     };
 
@@ -63,26 +59,19 @@ export const useCategorias = () => {
         try {
             setLoading(true);
             const dataToSubmit = { ...categoryData };
-
-            // If a new image file is present, move it to the 'image' property for FormData
             if (dataToSubmit.imageFile) {
                 dataToSubmit.image = dataToSubmit.imageFile;
             }
-            
-            // Clean up properties that should not be sent to the backend
             delete dataToSubmit.imageFile;
             delete dataToSubmit.imagePreview;
             
             const response = await updateCategory(dataToSubmit, getLocalStorage('access'));
-            const resp = { code: response.status ?? 200, message: 'Categoría actualizada' }
-            setLoading(false);
-            setStatus(resp);
-            return resp;
+            setStatus({ code: response.status ?? 200, message: 'Categoría actualizada' });
         } catch (err) {
-            const resp = { code: err.response?.status || 500, message: 'Error al actualizar la categoría' }
+            console.log(err)
+            setStatus({ code: err.response?.status || 500, message: 'Error al actualizar la categoría' });
+        } finally {
             setLoading(false);
-            setStatus(resp);
-            return resp;
         }
     };
 
@@ -90,23 +79,25 @@ export const useCategorias = () => {
         try {
             setLoading(true);
             await deleteCategory(id, getLocalStorage('access'));
-            const resp = { code: 200, message: 'Categoría eliminada' }
-            setLoading(false);
-            setStatus(resp);
-            return resp;
+            setStatus({ code: 200, message: 'Categoría eliminada' });
         } catch (err) {
-            const resp = { code: err.response?.status || 500, message: 'Error al eliminar la categoría' }
+            setStatus({ code: err.response?.status || 500, message: 'Error al eliminar la categoría' });
+        } finally {
             setLoading(false);
-            setStatus(resp);
-            return resp;
-        };
+        }
     };
+
+    const resetStatus = () => {
+        setStatus({ code: 0, message: null });
+    };
+
 
     return {
         loading,
         status,
         categorias,
         categoria,
+        resetStatus,
         buscarCategoria,
         listarCategorias,
         actualizarCategoria,

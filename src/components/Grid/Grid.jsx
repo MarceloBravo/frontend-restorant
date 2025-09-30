@@ -3,8 +3,21 @@ import { useEffect, useState } from 'react';
 import './Grid.scss'
 
 export const Grid = (props) => {
-    const { sinBusqueda, data, headers, fields, types, btnText, placeholderText, handlerBtnNuevoClick, handlerInputBuscarChange, handlerEditarClick, handlerEliminarClick } = props;
-    const [ cabeceras, setCabeceras ] = useState(headers ?? [])
+    const { 
+      sinBusqueda, 
+      data, 
+      headers, 
+      fields, 
+      types, 
+      btnText, 
+      placeholderText, 
+      searchValue,
+      handlerBtnNuevoClick, 
+      handlerInputBuscarChange, 
+      handlerEditarClick, 
+      handlerEliminarClick 
+    } = props;
+    const [ cabeceras, setCabeceras ] = useState(headers ?? []);
     const [ columnas, setColumnas ] = useState(fields ?? [])
 
     useEffect(() => {
@@ -23,7 +36,7 @@ export const Grid = (props) => {
     }, [data]);
 
 
-    const formateValue = (row, col) => {
+    const formatValue = (row, col) => {
       const value = row[columnas[col]]
       if(types?.length && Object.keys(row).length === types.length){
         return formatearValor(value, types[col])
@@ -62,12 +75,16 @@ export const Grid = (props) => {
             </button>
             </div>
             <div className="search-record">
-              <input 
-                className="input form-control" 
-                type="text" 
-                placeholder={placeholderText ?? "Buscar..."} 
-                onChange={handlerInputBuscarChange}
+              <form onSubmit={e => e.preventDefault()}>
+                <input 
+                  className="input form-control" 
+                  type="text" 
+                  placeholder={placeholderText ?? "Buscar..."} 
+                  onChange={e => handlerInputBuscarChange(e)}
+                  onKeyUp={e =>handlerInputBuscarChange(e)}
+                  value={searchValue}
                 />
+              </form>
             </div>
           </div>}
 
@@ -86,7 +103,7 @@ export const Grid = (props) => {
                 {data?.length > 0 && data?.map((row, rowIndex) => (
                   <tr key={rowIndex}>
                       {Object.keys(row).length > 0 && Object.keys(row).map((col, colIndex) => (
-                          columnas.indexOf(col) > -1 && <td key={colIndex}>{formateValue(row, colIndex)}</td>
+                          columnas.indexOf(col) > -1 && <td key={colIndex}>{formatValue(row, colIndex)}</td>
                       ))}
                       <td className="actions">
                           <button className="btn btn-sm btn-primary btn-edit" title="Editar" onClick={() =>handlerEditarClick(row[columnas[0]])}><Icon name='edit'/></button>
