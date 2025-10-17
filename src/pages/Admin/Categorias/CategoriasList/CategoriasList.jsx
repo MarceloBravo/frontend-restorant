@@ -79,7 +79,7 @@ const CategoriasList = () => {
                 data={categorias} 
                 headers={['ID', 'Nombre', 'Descripción', 'imágen', 'Fecha creación', 'Fecha modificación']} 
                 fields={['id','name', 'description', 'image', 'created_at', 'updated_at']} 
-                types={['number', 'text', 'text', 'image', 'date', 'date']}
+                types={['number', 'text', 'text', 'image', 'date-dma', 'date-dma']}
                 btnText={"Nueva categoría"}
                 placeholderText={"Buscar categoría..."}
                 searchValue={searchTerm}

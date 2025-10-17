@@ -16,7 +16,7 @@ export const parseJwt = (token) => {
     );
     return JSON.parse(jsonPayload);
   } catch (e) {
-    console.error("Token inválido", e);
+    //console.error("Token inválido", e);
     return null;
   }
 }

@@ -12,7 +12,7 @@ export const Modal = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        console.log('Modal -->', modal)
+        if(!modal.isOpen)return
         setTitulo(modal.title)
         setMensaje(modal.message)
         setBtnCancelarText(modal.btnCancelarText ?? 'Cancelar')

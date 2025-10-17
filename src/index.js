@@ -2,16 +2,22 @@ import 'semantic-ui-css/semantic.min.css';
 //import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import store from './store';
-import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
 import 'react-toastify/dist/ReactToastify.css';
+import './index.scss';
+
+const queryClient = new QueryClient()
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+root.render(  
   <Provider store={store}>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>    
   </Provider>
 );
 

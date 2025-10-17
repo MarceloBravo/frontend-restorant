@@ -21,14 +21,17 @@ const AdminUsersList = () => {
   const access = getLocalStorage('access')
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  
+  
 
   useEffect(()=>{
-      dispatch(getUsers(getLocalStorage('access')))
-  },[dispatch])
+    if(!access)return
+      dispatch(getUsers(access))
+      // eslint-disable-next-line
+  },[access])
 
   
   useEffect(()=> {
-    console.log('data', data)
     setUsers(data ?? [])
   },[data])
   
@@ -40,8 +43,13 @@ const AdminUsersList = () => {
       dispatch(getUsers(getLocalStorage('access')))
       setEliminado(false)
     }else if(status.message !== null ) {
-      toast.success(status.message)
+      if(status.code >= 200 && status.code < 300){
+        toast.success(status.message)
+      }else{
+        toast.error(status.message)
+      }
     }
+    // eslint-disable-next-line
   },[status?.code, eliminado])
 
   
@@ -51,6 +59,7 @@ const AdminUsersList = () => {
       setEliminado(true)
       setDeleteId(null)
     }
+    // eslint-disable-next-line
   },[modal])
 
 
@@ -83,8 +92,6 @@ const AdminUsersList = () => {
          dispatch(getUsers(getLocalStorage('access'), textoBuscado))
     }
   }
-
-
 
   return (
         <div className="main-container">

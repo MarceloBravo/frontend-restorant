@@ -1,32 +1,34 @@
 import { useDispatch } from 'react-redux'
 import { ReactComponent as ExitSvg }  from '../../assets/svg/exit.svg'
-import { useCheckSession } from '../../Hooks'
+import { useUserSession } from '../../Hooks'
 import { logOut } from '../../store/slices/loginSlices'
 
 import { useNavigate } from 'react-router-dom'
 import { clearLocalStorage } from '../../shared/storage'
+import { useEffect, useState } from 'react'
 import './TopMenu.scss'
 
 export const TopMenu = () => {
-    const userData = useCheckSession()
+    const [ user, setUser ] = useState('')
+    const { userData } = useUserSession()
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if(userData?.first_name && userData?.last_name){
+            setUser(userData.first_name + ' ' + userData.last_name)
+        }else if(userData?.email){
+            setUser(userData.email)
+        }else{
+            setUser('')
+        }
+    },[userData])
     
     const handlerExitClick = () => {
         dispatch(logOut())
         clearLocalStorage()
         navigate('/admin/login')
 
-    }
-
-    const getUsuario = () => {
-        if(userData.first_name && userData.last_name){
-            return userData.first_name + ' ' + userData.last_name
-        }else if(userData.email){
-            return userData.email
-        }else{
-            return 'usuario'
-        }
     }
 
     
@@ -50,7 +52,7 @@ export const TopMenu = () => {
                 </li>
             </ul>
             <div className="d-flex" role="search">
-                <label className="lbl-user_name" htmlFor="">Hola, {getUsuario()}</label>
+                <label className="lbl-user_name" htmlFor="">Hola{', ' + user}</label>
                 <ExitSvg onClick={handlerExitClick} fill="black#" className="exit-icon"/>
             </div>
             </div>

@@ -14,6 +14,7 @@ export const Grid = (props) => {
       searchValue,
       handlerBtnNuevoClick, 
       handlerInputBuscarChange, 
+      handlerInputBuscarKeyDown,
       handlerEditarClick, 
       handlerEliminarClick 
     } = props;
@@ -36,10 +37,10 @@ export const Grid = (props) => {
     }, [data]);
 
 
-    const formatValue = (row, col) => {
-      const value = row[columnas[col]]
-      if(types?.length && Object.keys(row).length === types.length){
-        return formatearValor(value, types[col])
+    const formatValue = (row, colIndex) => {
+      const value = row[columnas[colIndex]]
+      if(types?.length && Object.keys(columnas).length === types.length){
+        return formatearValor(value, types[colIndex])
       }else{
         return formatearValor(value)
       }
@@ -53,9 +54,21 @@ export const Grid = (props) => {
           return <img src={value} alt="preview" style={{"maxWidth": "100px", "height": "100px"}}/>
         case 'boolean':
           return value ? 'Sí' : 'No'
+        case 'date-d':
+          const date = new Date(value);
+          return date.getDate().toString();
+        case 'date-dm':
+          const dateDm = new Date(value);
+          return (dateDm.getDate().toString().padStart(2, '0') + '/' + (dateDm.getMonth() + 1).toString().padStart(2, '0'));
+        case 'date-dma':
+          const dateDma = new Date(value);
+          return (dateDma.getDate().toString().padStart(2, '0') + '/' + (dateDma.getMonth() + 1).toString().padStart(2, '0') + '/' + dateDma.getFullYear().toString());
+        case 'date-dmah':
+          const dateDmah = new Date(value);
+          return (dateDmah.getDate().toString().padStart(2, '0') + '/' + (dateDmah.getMonth() + 1).toString().padStart(2, '0') + '/' + dateDmah.getFullYear().toString()+ date.getHours().toString().padStart(2, '0') + ':' + dateDmah.getMinutes().toString().padStart(2, '0'));
         case 'date':
         case 'number':
-        case 'text':
+        case 'text':          
           return value
         default:
           return value
@@ -82,6 +95,7 @@ export const Grid = (props) => {
                   placeholder={placeholderText ?? "Buscar..."} 
                   onChange={e => handlerInputBuscarChange(e)}
                   onKeyUp={e =>handlerInputBuscarChange(e)}
+                  onKeyDown={e =>handlerInputBuscarKeyDown(e)}
                   value={searchValue}
                 />
               </form>
@@ -102,8 +116,8 @@ export const Grid = (props) => {
                 <tbody>
                 {data?.length > 0 && data?.map((row, rowIndex) => (
                   <tr key={rowIndex}>
-                      {Object.keys(row).length > 0 && Object.keys(row).map((col, colIndex) => (
-                          columnas.indexOf(col) > -1 && <td key={colIndex}>{formatValue(row, colIndex)}</td>
+                      {columnas.length > 0 && columnas.map((col, colIndex) => (
+                          Object.keys(row).indexOf(col) > -1 && <td key={colIndex}>{formatValue(row, colIndex)}</td>
                       ))}
                       <td className="actions">
                           <button className="btn btn-sm btn-primary btn-edit" title="Editar" onClick={() =>handlerEditarClick(row[columnas[0]])}><Icon name='edit'/></button>
