@@ -87,10 +87,12 @@ const AdminUsersList = () => {
   const handlerInputBuscarChange = (e) => {
     e.preventDefault();
     setTextoBuscado(e.target.value)
-    if(e.key === 'Enter'){
-      console.log('Buscando...', textoBuscado)
+  }
+
+  const  handlerInputBuscarKeyDown = (e) => {
+   if(e.key === 'Enter'){
          dispatch(getUsers(getLocalStorage('access'), textoBuscado))
-    }
+    } 
   }
 
   return (
@@ -107,6 +109,7 @@ const AdminUsersList = () => {
             handlerInputBuscarChange={handlerInputBuscarChange}
             handlerEditarClick={handlerEditarClick}
             handlerEliminarClick={handlerEliminarClick}
+            handlerInputBuscarKeyDown={handlerInputBuscarKeyDown}
           />
           
         </div>

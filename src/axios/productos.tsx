@@ -12,7 +12,6 @@ export const getProducts = (searchTerm: string = ''): Promise<any> => {
     if (searchTerm) {
         options = { params: { search: searchTerm } };
     }
-    console.log('----------------',host + '/api/products/', options);
     return axios.get(host + '/api/products/', options);
 }
 

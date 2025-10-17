@@ -8,11 +8,16 @@ import { toast } from 'react-toastify';
 
 export const useProductosListLogic = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchTextTemp, setSearchTextTemp] = useState('');
   const [deletedId, setDeletedId] = useState<number | null>(null);
   const { listar, eliminar } = UseProducto(searchTerm);
   const modal = useSelector((state: any) => state.modal);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log('Search Term changed:', searchTerm);
+  }, [searchTerm]);
 
   useEffect(() => {
     listar.refetch();
@@ -47,7 +52,6 @@ export const useProductosListLogic = () => {
     if (listar.isError === true) {
       toast.error(listar.error.message);
     }
-    console.log('Listar productos - estado', listar);
     // eslint-disable-next-line
   }, [listar])
 
@@ -62,12 +66,13 @@ export const useProductosListLogic = () => {
 
   const handlerInputBuscarChange  = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setSearchTerm(e.target.value);
+    setSearchTextTemp(e.target.value);
   };
 
   const handlerInputBuscarKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      listar.refetch();
+      setSearchTerm(searchTextTemp);
+      //listar.refetch();
     }
   };
 
@@ -88,6 +93,6 @@ export const useProductosListLogic = () => {
     handlerInputBuscarKeyDown,
     handlerEliminarClick,
     listar,
-    searchTerm
+    searchTextTemp
   }
 }

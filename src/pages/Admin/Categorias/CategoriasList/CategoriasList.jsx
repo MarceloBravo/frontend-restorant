@@ -57,6 +57,9 @@ const CategoriasList = () => {
     const handlerInputBuscarChange  = (e) => {
         e.preventDefault();
         setSearchTerm(e.target.value);
+    }
+
+    const handlerInputBuscarKeyDown = (e) => {
         if(e.key === 'Enter') listarCategorias(searchTerm);
     };
 
@@ -87,6 +90,7 @@ const CategoriasList = () => {
                 handlerInputBuscarChange={handlerInputBuscarChange}
                 handlerEditarClick={handlerEditarClick}
                 handlerEliminarClick={handlerEliminarClick}
+                handlerInputBuscarKeyDown={handlerInputBuscarKeyDown}
             />
         </div>
     )

@@ -10,7 +10,7 @@ const ProductosList = () => {
     handlerInputBuscarKeyDown,
     handlerEliminarClick, 
     listar, 
-    searchTerm
+    searchTextTemp
   } = useProductosListLogic();
     
   return (
@@ -25,7 +25,7 @@ const ProductosList = () => {
             types={['number', 'text', 'text','image', 'money','boolean','string', 'date-dma', 'date-dma']}
             btnText={"Nuevo producto"}
             placeholderText={"Buscar producto..."}
-            searchValue={searchTerm}
+            searchValue={searchTextTemp}
             handlerBtnNuevoClick={handlerBtnNuevoClick}
             handlerInputBuscarChange={handlerInputBuscarChange}
             handlerInputBuscarKeyDown={handlerInputBuscarKeyDown}
