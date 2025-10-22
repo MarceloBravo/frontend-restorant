@@ -1,6 +1,4 @@
-import { useDispatch } from 'react-redux'
-import { useEffect } from 'react'
-import { closeToast } from '../../../store/slices/toastSlice.js'
+import { ToastLogic } from './ToastLogic.js'
 import './toast.scss'
 
 /**
@@ -9,25 +7,7 @@ import './toast.scss'
  * @returns {JSX.Element} El componente Toast.
  */
 export const Toast = (props) => {
-    const {mensaje, titulo, info, id, tipo} = props
-    const dispatch = useDispatch()
-    const autoCloseTime = 5000; // 5 seconds
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            dispatch(closeToast({id}))
-        }, autoCloseTime);
-
-        return () => {
-            clearTimeout(timer);
-        }
-        // eslint-disable-next-line
-    },[dispatch, id]);
-
-
-    const close = (id) => {
-        dispatch(closeToast({id}))
-    }
+    const {mensaje, titulo, info, id, tipo, close} = ToastLogic(props)
 
     return (
         <>

@@ -1,1 +1,1 @@
-export * from './TopMenu.js'
+export * from './TopMenu'

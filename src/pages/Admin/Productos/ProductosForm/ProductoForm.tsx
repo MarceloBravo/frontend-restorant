@@ -9,6 +9,11 @@ import { UseProducto } from '../../../../Hooks/UseProducto';
 import { toast } from 'react-toastify';
 import './ProductosForm.scss';
 
+/**
+ * Componente contenedor para el formulario de productos (crear/editar/eliminar).
+ * Maneja toda la lógica de estado, obtención de datos, validación y comunicación con la API,
+ * pasando los datos y manejadores al componente de presentación `ProductoFormHtml`.
+ */
 const ProductoForm: React.FC = () => {
   const param = useParams()
   const id: number | null = param.id ? parseInt(param.id) : null; // Aquí podrías obtener el ID del producto si estás editando uno existente.
@@ -44,6 +49,10 @@ const ProductoForm: React.FC = () => {
       }
   }, [ver.fetchStatus]);
 
+  /**
+   * Efecto que reacciona al resultado de las mutaciones (crear, actualizar, eliminar) de react-query.
+   * Muestra notificaciones de éxito o error y redirige al usuario en caso de éxito.
+   */
   useEffect(() => {
     if(
       (nuevo.isSuccess && accion === 'crear') || 
@@ -68,6 +77,10 @@ const ProductoForm: React.FC = () => {
 
   },[nuevo, actualizar, eliminar]);
 
+  /**
+   * Efecto que ejecuta la mutación correspondiente (crear, actualizar, eliminar) 
+   * después de que el usuario confirma la acción en el modal.
+   */
   useEffect(() => {
     if (isOkClicked) {
       switch (accion) {
@@ -92,6 +105,11 @@ const ProductoForm: React.FC = () => {
     }
   }, [isOkClicked]);
 
+  /**
+   * Maneja los cambios en los campos del formulario (inputs, selects, checkboxes)
+   * y actualiza el estado `formData`.
+   * @param e - El evento de cambio del elemento del formulario.
+   */
   const handlerInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name } = e.target as HTMLInputElement | HTMLSelectElement;
     let value: any;
@@ -110,6 +128,11 @@ const ProductoForm: React.FC = () => {
     validateOnInput(name, value);
   }
 
+  /**
+   * Maneja el clic en el botón de "Grabar" o "Actualizar".
+   * Valida el formulario y, si es válido, abre un modal de confirmación.
+   * @param e - El evento de clic del botón.
+   */
   const handlerGrabarClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();    
     if(validateOnSave()){
@@ -123,6 +146,11 @@ const ProductoForm: React.FC = () => {
     }
   }
 
+  /**
+   * Maneja el clic en el botón de "Eliminar".
+   * Abre un modal de confirmación para iniciar el proceso de eliminación.
+   * @param e - El evento de clic del botón.
+   */
   const handlerEliminarClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(openModal({
       title: 'Eliminar producto', 
@@ -139,6 +167,11 @@ const ProductoForm: React.FC = () => {
 
   }
 
+  /**
+   * Maneja la selección de un archivo de imagen.
+   * Muestra una previsualización de la imagen y la almacena en el estado `formData`.
+   * @param e - El evento de cambio del input de tipo archivo.
+   */
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
     if (file) {
@@ -192,6 +225,10 @@ const ProductoForm: React.FC = () => {
     return error;
   }
 
+  /**
+   * Realiza una validación final de los campos principales antes de guardar.
+   * @returns {boolean} - `true` si el formulario es válido, `false` en caso contrario.
+   */
   const validateOnSave = (): boolean => {
     if (formData.title.trim() === '' || formData.description.trim() === '' || formData.price <= 0 || !formData.category || (!formData.image && !imageUrl)) {
       dispatch(openModal(openModal({

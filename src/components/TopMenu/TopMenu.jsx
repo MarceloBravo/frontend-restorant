@@ -1,35 +1,9 @@
-import { useDispatch } from 'react-redux'
 import { ReactComponent as ExitSvg }  from '../../assets/svg/exit.svg'
-import { useUserSession } from '../../Hooks'
-import { logOut } from '../../store/slices/loginSlices'
-
-import { useNavigate } from 'react-router-dom'
-import { clearLocalStorage } from '../../shared/storage'
-import { useEffect, useState } from 'react'
+import { TopMenuLogic } from './TopMenuLogic'
 import './TopMenu.scss'
 
 export const TopMenu = () => {
-    const [ user, setUser ] = useState('')
-    const { userData } = useUserSession()
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        if(userData?.first_name && userData?.last_name){
-            setUser(userData.first_name + ' ' + userData.last_name)
-        }else if(userData?.email){
-            setUser(userData.email)
-        }else{
-            setUser('')
-        }
-    },[userData])
-    
-    const handlerExitClick = () => {
-        dispatch(logOut())
-        clearLocalStorage()
-        navigate('/admin/login')
-
-    }
+    const { user, handlerExitClick } = TopMenuLogic()
 
     
   return (

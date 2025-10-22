@@ -1,1 +1,1 @@
-export * from './SideMenu.jsx'
+export * from './SideMenu'

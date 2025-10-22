@@ -6,14 +6,15 @@ import { useNavigate } from 'react-router-dom'
 import { clearLocalStorage } from '../shared/storage'
 import { isTokenExpired, parseJwt } from '../shared'
 import { getUserById } from '../axios/users'
+import { UserClass } from '../class/UserClass';
 
-export const useUserSession = () => {
-    const [ userData, setUserData ] = useState(null)
-    const [ intervalId, setIntervalId ] = useState(null)
-    const [ isUserlogued, setIsUserlogued] = useState(false)
-    const [ userId, setUserId ] = useState(null)
+export const useUserSession = (): { userData: UserClass | null, isUserlogued: boolean } => {
+    const [ userData, setUserData ] = useState<UserClass | null>(null)
+    const [ intervalId, setIntervalId ] = useState<NodeJS.Timeout | null>(null)
+    const [ isUserlogued, setIsUserlogued] = useState<boolean>(false)
+    const [ userId, setUserId ] = useState<string | null>(null)
     const accessToken = getLocalStorage('access')
-    const user = useSelector(state => state.users.user)
+    const user = useSelector<unknown, any>((state: any) => state.users.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const interval = 5000
@@ -24,7 +25,7 @@ export const useUserSession = () => {
         const tokenData = parseJwt(accessToken)
         if(tokenData?.user_id){
             setUserId(tokenData.user_id)
-            dispatch(getUserById(tokenData.user_id, accessToken))
+            dispatch(getUserById(tokenData.user_id, accessToken) as any)
         }else{
             finalizarSession()
         }
@@ -33,7 +34,7 @@ export const useUserSession = () => {
     
 
     useEffect(()=> {
-        if(user?.id === parseInt(userId)){
+        if(user && userId && user.id === parseInt(userId)){
             setUserData(user)
         }
     }
@@ -55,12 +56,12 @@ export const useUserSession = () => {
         // eslint-disable-next-line
     },[isUserlogued])
 
-    const finalizarSession = () => {
+    const finalizarSession = (): void => {
         if(!accessToken || isTokenExpired(accessToken)){
             dispatch(logOut())
             clearLocalStorage()
             navigate('/admin/login')
-            clearInterval(intervalId);
+            if(intervalId)clearInterval(intervalId);
             setIsUserlogued(false)
         }else{
             setIsUserlogued(true)

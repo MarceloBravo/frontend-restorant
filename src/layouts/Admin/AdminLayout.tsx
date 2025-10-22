@@ -3,10 +3,9 @@ import { SideMenu, TopMenu } from "../../components";
 import { useUserSession } from "../../Hooks";
 import "./AdminLayout.scss"
 
-export default function AdminLayout(props) {
+export default function AdminLayout(props: {menu: string}) {
   const { isUserlogued } = useUserSession()
 
-  console.log(isUserlogued ? 'Está logueado' : 'No está logueado')
   if(!isUserlogued) return
 
   return  (
