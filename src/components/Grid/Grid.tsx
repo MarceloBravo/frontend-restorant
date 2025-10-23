@@ -66,8 +66,10 @@ export const Grid = (props: GridLogicPropsInterface): JSX.Element => {
                           Object.keys(row).indexOf(col) > -1 && <td key={colIndex}>{formatValue(row, colIndex)}</td>
                       ))}
                       <td className="actions">
+                        <div className="btn-group">
                           <button className="btn btn-sm btn-primary btn-edit" title="Editar" onClick={() =>handlerEditarClick(row[columnas[0]])}><Icon name='edit'/></button>
                           <button className="btn btn-sm btn-danger" title="Eliminar" onClick={() => handlerEliminarClick(row[columnas[0]])}><Icon name='trash'/></button>
+                        </div>
                       </td>
                   </tr>
                 ))}

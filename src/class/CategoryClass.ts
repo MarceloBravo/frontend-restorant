@@ -4,6 +4,6 @@ export class CategoryClass {
     description: string = '';
     image: File | null = null;
     imageUrl?: string | null = null;
-    created_at: Date = new Date();
-    updated_at: Date = new Date();
+    created_at?: Date = new Date();
+    updated_at?: Date = new Date();
 }

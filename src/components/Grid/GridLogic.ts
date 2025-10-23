@@ -102,7 +102,7 @@ export const GridLogic = (props: GridLogicPropsInterface): any => {
       const tipo: string = type ?? typeof value;
       switch(tipo){
         case 'image':
-          return React.createElement('img', { src: value as any, alt: 'preview', style: { maxWidth: '100px', height: '100px' } });
+          return React.createElement('img', { src: value as any, alt: 'preview' });
         case 'boolean':
           return value ? 'Sí' : 'No'
         case 'date-d':
