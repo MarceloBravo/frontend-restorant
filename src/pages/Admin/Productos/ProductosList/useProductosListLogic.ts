@@ -4,21 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { openModal } from '../../../../store/slices/ModalSlices';
 import { toast } from 'react-toastify';
+import { ProductosListLogicInterface } from '../../../../interfaces/ProductosListInterface';
 
 /**
  * Hook personalizado que encapsula la lógica para la lista de productos del panel de administración.
  * Maneja la obtención de datos, búsqueda, y el flujo de eliminación con modal de confirmación.
- * @returns {{ 
- *  handlerBtnNuevoClick: (e: React.MouseEvent<HTMLButtonElement>) => void, 
- *  handlerEditarClick: (id: string) => void, 
- *  handlerInputBuscarChange: (e: React.ChangeEvent<HTMLInputElement>) => void, 
- *  handlerInputBuscarKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void, 
- *  handlerEliminarClick: (id: number) => void, 
- *  listar: any, 
- *  searchTextTemp: string 
- * }} - Objeto con los manejadores de eventos y el estado de la consulta de productos.
+ * @returns {ProductosListLogicInterface} - Objeto con los manejadores de eventos y el estado de la consulta de productos.
  */
-export const useProductosListLogic = () => {
+export const useProductosListLogic = (): ProductosListLogicInterface => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTextTemp, setSearchTextTemp] = useState('');
   const [deletedId, setDeletedId] = useState<number | null>(null);
@@ -83,7 +76,7 @@ export const useProductosListLogic = () => {
    * Navega a la página de creación de un nuevo producto.
    * @param e - Evento de clic del botón.
    */
-  const handlerBtnNuevoClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handlerBtnNuevoClick = (e: any): void => {
     e.preventDefault()
     navigate(`/admin/productos/nuevo`)
   }
@@ -92,7 +85,7 @@ export const useProductosListLogic = () => {
    * Navega a la página de edición de un producto existente.
    * @param id - ID del producto a editar.
    */
-  const handlerEditarClick = (id: string) => {
+  const handlerEditarClick = (id: number) => {
     navigate(`/admin/productos/${id}`)
   } 
 

@@ -1,8 +1,10 @@
+import type { FC } from 'react';
 import { Grid } from '../../../../components/Grid'
-import { useProductosListLogic } from './useProductosListLogic.ts'
+import { ProductosListLogicInterface } from '../../../../interfaces/ProductosListInterface';
+import { useProductosListLogic } from './useProductosListLogic'
 
 
-const ProductosList = () => {
+const ProductosList: FC<ProductosListLogicInterface> = () => {
   const { 
     handlerBtnNuevoClick, 
     handlerEditarClick, 
@@ -26,7 +28,7 @@ const ProductosList = () => {
             btnText={"Nuevo producto"}
             placeholderText={"Buscar producto..."}
             searchValue={searchTextTemp}
-            handlerBtnNuevoClick={handlerBtnNuevoClick}
+            handlerBtnNuevoClick={() => handlerBtnNuevoClick(undefined)}
             handlerInputBuscarChange={handlerInputBuscarChange}
             handlerInputBuscarKeyDown={handlerInputBuscarKeyDown}
             handlerEditarClick={handlerEditarClick}

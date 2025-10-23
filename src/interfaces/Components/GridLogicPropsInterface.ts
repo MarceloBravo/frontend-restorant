@@ -10,6 +10,6 @@ export interface GridLogicPropsInterface {
   handlerBtnNuevoClick: () => void;
   handlerInputBuscarChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handlerInputBuscarKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
-  handlerEditarClick: (rowData: object) => void;
-  handlerEliminarClick: (rowData: object) => void;
+  handlerEditarClick: (id: number) => void;
+  handlerEliminarClick: (id: number) => void;
 } 
