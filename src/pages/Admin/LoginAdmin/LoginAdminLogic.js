@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { loginAdmin }    from '../../../axios/login.js'
+import { loginAdmin }    from '../../../axios/login.ts'
 import { validaEmail } from '../../../shared'
 import { toast } from 'react-toastify';
 import { getLocalStorage, setLocalStorage } from '../../../shared/storage.js'
