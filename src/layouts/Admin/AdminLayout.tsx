@@ -3,7 +3,7 @@ import { SideMenu, TopMenu } from "../../components";
 import { useUserSession } from "../../Hooks";
 import "./AdminLayout.scss"
 
-export default function AdminLayout(props: {menu: string}) {
+export default function AdminLayout(props: {menu: string}): React.ReactNode {
   const { isUserlogued } = useUserSession()
 
   if(!isUserlogued) return
