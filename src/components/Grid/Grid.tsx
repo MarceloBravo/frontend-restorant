@@ -1,8 +1,10 @@
 import { Icon } from 'semantic-ui-react';
 import { GridLogic } from './GridLogic';
+import { GridLogicPropsInterface } from '../../interfaces/Components/GridLogicPropsInterface';
+import { JSX } from 'react';
 import './Grid.scss'
 
-export const Grid = (props) => {
+export const Grid = (props: GridLogicPropsInterface): JSX.Element => {
     const { 
       sinBusqueda, 
       data, 
@@ -51,16 +53,16 @@ export const Grid = (props) => {
               <table className='table table-users'>
                 <thead>
                   <tr>
-                    {cabeceras.length > 0 && cabeceras.map((header, index) => (
+                    {cabeceras.length > 0 && cabeceras.map((header: string, index: number) => (
                       <th key={index} scope='col'>{header}</th>
                     ))}
                     <th scope='col'>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                {data?.length > 0 && data?.map((row, rowIndex) => (
+                {data?.length > 0 && data?.map((row: any, rowIndex: number) => (
                   <tr key={rowIndex}>
-                      {columnas.length > 0 && columnas.map((col, colIndex) => (
+                      {columnas.length > 0 && columnas.map((col: string, colIndex: number) => (
                           Object.keys(row).indexOf(col) > -1 && <td key={colIndex}>{formatValue(row, colIndex)}</td>
                       ))}
                       <td className="actions">

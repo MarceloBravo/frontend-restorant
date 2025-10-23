@@ -1,6 +1,9 @@
+import { LoginFormInterface } from '../../../interfaces/LoginForm/LoginFormInterface'
 import './LoginForm.scss'
 
-export const LoginForm = (props)=> {
+
+
+export const LoginForm = (props: LoginFormInterface)=> {
     const { formData,formError, handlerOnChange, handlerButton } = props
 
   return (

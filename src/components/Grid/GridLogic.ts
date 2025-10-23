@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { GridLogicPropsInterface } from '../../interfaces/Components/GridLogicPropsInterface';
+
 
 /**
  * Hook de lógica para un componente de grilla (Grid) reutilizable.
@@ -19,7 +21,7 @@ import { useEffect, useState } from 'react';
  * @param {function} props.handlerEliminarClick - Manejador para el evento click del botón "eliminar" en una fila.
  * @returns {{sinBusqueda: boolean, data: Array<object>, cabeceras: Array<string>, columnas: Array<string>, handlerBtnNuevoClick: function, btnText: string, placeholderText: string, searchValue: string, handlerInputBuscarChange: function, handlerInputBuscarKeyDown: function, handlerEditarClick: function, handlerEliminarClick: function, formatValue: function, formatearValor: function}}
  */
-export const GridLogic = (props) => {
+export const GridLogic = (props: GridLogicPropsInterface): any => {
     const { 
       sinBusqueda, 
       data, 
@@ -66,14 +68,28 @@ export const GridLogic = (props) => {
      * @param {number} colIndex - El índice de la columna actual.
      * @returns {*} - El valor formateado, que puede ser un string o un elemento JSX (e.g., para imágenes).
      */
-    const formatValue = (row, colIndex) => {
-      const value = row[columnas[colIndex]]
+    const formatValue = (row: object, colIndex: number): any => {
+      const value: any = obtenerValorDeColumna(row, colIndex);
+      
       if(types?.length && Object.keys(columnas).length === types.length){
-        return formatearValor(value, types[colIndex])
+        return formatearValor(value, types[colIndex]);
       }else{
         return formatearValor(value)
       }
     }
+
+
+    const obtenerValorDeColumna = (row: object, colIndex: number): any => {
+      if(columnas.length === 0){
+        const colName: string = Object.keys(row)[colIndex]
+        return row[colName as keyof object];
+
+      }else{
+        return row[columnas[colIndex] as keyof object];
+      }
+    }
+
+
 
 
     /**
@@ -82,25 +98,25 @@ export const GridLogic = (props) => {
      * @param {string|null} [type=null] - El tipo de dato para el formateo (e.g., 'image', 'boolean', 'date-dma'). Si es nulo, se infiere del `typeof` del valor.
      * @returns {*} - El valor formateado.
      */
-    const formatearValor = (value, type = null) => {
-      const tipo = type || typeof value    
+    const formatearValor = (value: string | number | ImageBitmap | Date | boolean, type?: string | null): any => {
+      const tipo: string = type ?? typeof value;
       switch(tipo){
         case 'image':
-          return <img src={value} alt="preview" style={{"maxWidth": "100px", "height": "100px"}}/>
+          return React.createElement('img', { src: value as any, alt: 'preview', style: { maxWidth: '100px', height: '100px' } });
         case 'boolean':
           return value ? 'Sí' : 'No'
         case 'date-d':
-          const date = new Date(value);
+          const date = new Date(value.toString());
           return date.getDate().toString();
         case 'date-dm':
-          const dateDm = new Date(value);
+          const dateDm = new Date(value.toString());
           return (dateDm.getDate().toString().padStart(2, '0') + '/' + (dateDm.getMonth() + 1).toString().padStart(2, '0'));
         case 'date-dma':
-          const dateDma = new Date(value);
+          const dateDma = new Date(value.toString());
           return (dateDma.getDate().toString().padStart(2, '0') + '/' + (dateDma.getMonth() + 1).toString().padStart(2, '0') + '/' + dateDma.getFullYear().toString());
         case 'date-dmah':
-          const dateDmah = new Date(value);
-          return (dateDmah.getDate().toString().padStart(2, '0') + '/' + (dateDmah.getMonth() + 1).toString().padStart(2, '0') + '/' + dateDmah.getFullYear().toString()+ date.getHours().toString().padStart(2, '0') + ':' + dateDmah.getMinutes().toString().padStart(2, '0'));
+          const dateDmah = new Date(value.toString());
+          return (dateDmah.getDate().toString().padStart(2, '0') + '/' + (dateDmah.getMonth() + 1).toString().padStart(2, '0') + '/' + dateDmah.getFullYear().toString()+ dateDmah.getHours().toString().padStart(2, '0') + ':' + dateDmah.getMinutes().toString().padStart(2, '0'));
         case 'date':
         case 'number':
         case 'text':          
