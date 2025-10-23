@@ -99,6 +99,7 @@ export const GridLogic = (props: GridLogicPropsInterface): any => {
      * @returns {*} - El valor formateado.
      */
     const formatearValor = (value: string | number | ImageBitmap | Date | boolean, type?: string | null): any => {
+      console.log('Formateando valor:', value, 'de tipo:', type);
       const tipo: string = type ?? typeof value;
       switch(tipo){
         case 'image':
@@ -121,6 +122,9 @@ export const GridLogic = (props: GridLogicPropsInterface): any => {
         case 'number':
         case 'text':          
           return value
+        case 'money':
+          const price = new Intl.NumberFormat('es-CL', { useGrouping: true }).format(Number(value));
+          return ('$ ' + price).replace(/\s/g, '\u00A0'); // Reemplaza espacios por espacios inseparables
         default:
           return value
       }
