@@ -1,1 +1,1 @@
-export { default } from './CategoriasList/CategoriasList.jsx'
+export { default } from './CategoriasList/CategoriasList.tsx'

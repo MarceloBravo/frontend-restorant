@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { getCategorias as getCategoriasApi, getCategoria as getCategoriaApi, updateCategory, createCategory, deleteCategory } from '../axios/categorias';
 import { getLocalStorage } from '../shared/storage';
+import { CategoryClass } from '../class/CategoryClass';
 
 interface CategoriaFormInterface {
     name: string;
@@ -14,7 +15,7 @@ export const useCategorias = () => {
     const [loading, setLoading] = useState(true);
     const [categorias, setCategorias] = useState([]);
     const [status, setStatus] = useState<{ code: number, message: string | null }>({ code: 0, message: null });
-    const [categoria, setCategoria] = useState(null);
+    const [categoria, setCategoria] = useState<CategoryClass | null>(null);
 
     const listarCategorias = async (searchTerm: string = ''): Promise<void>=> {
         try {

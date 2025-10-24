@@ -1,21 +1,23 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { openModal } from '../../../../store/slices/ModalSlices';
 import { useCategorias } from '../../../../Hooks/useCategorias';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import CategoriasFormHtml from './CategoriasFormHtml'
+import { CategoryClass } from '../../../../class/CategoryClass';
 
 
-const CategoriasForm = () => {
+const CategoriasForm: React.FC = () => {
     const param = useParams();
-    const id = param.id ? param.id : null;
+    const id: string | null = param.id ? param.id : null;
     const { categoria, status, buscarCategoria, nuevaCategoria, actualizarCategoria, eliminarCategoria } = useCategorias();
-    const [ formData, setFormData ] = useState({ name: '', description: '', image: null, imageFile: null});
-    const [ imagePreview, setImagePreview ] = useState(null);
-    const [ accion, setAccion ] = useState(null);
-    const fileInputRef = useRef(null);
-    const isOkClicked = useSelector(state => state.modal.isOkClicked);
+    const [ formData, setFormData ] = useState(new CategoryClass());
+    //const [ formData, setFormData ] = useState({ name: '', description: '', imageUrl: null, image: null});
+    const [ imagePreview, setImagePreview ] = useState<File | string | null>(null);
+    const [ accion, setAccion ] = useState<string | null>(null);
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const isOkClicked = useSelector((state: any) => state.modal.isOkClicked);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -23,7 +25,7 @@ const CategoriasForm = () => {
 
     useEffect(() => {
         if (id) {
-            buscarCategoria(id);
+            buscarCategoria(Number(id));
         }
         // eslint-disable-next-line
     }, [id]);
@@ -32,9 +34,9 @@ const CategoriasForm = () => {
     useEffect(() => {
         if (categoria) {
             setFormData(categoria);
-            setImagePreview(categoria.image ?? null);
+            setImagePreview(categoria.imageUrl ?? null);
         } else {
-            setFormData({ name: '', description: '', image: null, imageFile: null });
+            setFormData({ name: '', description: '', imageUrl: null, image: null });
         }
     }, [categoria])
 
@@ -43,13 +45,13 @@ const CategoriasForm = () => {
         if(!isOkClicked || !accion)return;
         // Cuando el usuario confirma en el modal, se ejecuta la acción correspondiente.
         const data = {...formData};
-        if(data?.image === categoria?.image) delete data.image;
+        if(data?.imageUrl === categoria?.imageUrl) delete data.imageUrl;
         if(accion === 'crear'){
             nuevaCategoria(data);
         }else if(accion === 'actualizar'){
             actualizarCategoria(data);
         }else if(accion === 'eliminar'){
-            eliminarCategoria(id);
+            eliminarCategoria(Number(id));
         }
         // eslint-disable-next-line
     },[isOkClicked])
@@ -68,22 +70,23 @@ const CategoriasForm = () => {
     }, [status])
     
 
-    const handlerInputChange = (e) => {
+    const handlerInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const { id, value } = e.target;
         setFormData(prev => ({ ...prev, [id]: value }));
     };
 
 
-    const handleImageUploadClick = () => {
-        fileInputRef.current.click();
+    const handleImageUploadClick = (): void => {
+        if( fileInputRef.current )
+            fileInputRef.current.click();
     };
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        const file = e.target.files && e.target.files[0];
         if (file) {
             const previewUrl = URL.createObjectURL(file);
             setImagePreview(previewUrl);
-            setFormData(prev => ({ ...prev, imageFile: file }));
+            setFormData(prev => ({ ...prev, image: file }));
         }else{
             setImagePreview(null);
         }   
@@ -91,8 +94,7 @@ const CategoriasForm = () => {
     }
 
 
-    const handlerGrabarClick = (e) => {
-        e.preventDefault();
+    const handlerGrabarClick = (): void => {
         if(validaDatos()){
             dispatch(openModal({
                 title: !id ? 'Grabar categoría' : 'Actualizar categoría',
@@ -104,8 +106,7 @@ const CategoriasForm = () => {
         }
     }
 
-    const handlerEliminarClick = (e) => {
-        e.preventDefault();
+    const handlerEliminarClick = (): void => {
         dispatch(openModal({
             title: 'Eliminar categoría',
             message: '¿Está seguro que desea eliminar esta categoría?',
@@ -116,8 +117,7 @@ const CategoriasForm = () => {
     }
 
 
-    const handlerCancelarClick = (e) => {
-        e.preventDefault();
+    const handlerCancelarClick = (): void => {
         navigate('/admin/categorias');
     }
     
@@ -130,7 +130,7 @@ const CategoriasForm = () => {
             case formData.description.length < 3:
                 toast.error('La descripción debe tener al menos 3 caracteres');
                 break;
-            case !formData.image && !formData.imageFile:
+            case !formData.imageUrl && !formData.image:
                 toast.error('La imagen es requerida');
                 break;
             default:

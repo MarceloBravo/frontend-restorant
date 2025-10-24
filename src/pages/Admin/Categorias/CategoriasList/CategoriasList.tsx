@@ -2,10 +2,7 @@ import { Grid } from '../../../../components/Grid'
 import { Loader } from 'semantic-ui-react'
 import CategoriasListLogic from './CategoriasListLogic'
 
-import './CategoriasList.scss'
-
-
-const CategoriasList = () => {
+const CategoriasList: React.FC = () => {
     
     const { loading,
             categorias,
@@ -14,7 +11,7 @@ const CategoriasList = () => {
             handlerEditarClick,
             handlerInputBuscarChange,
             handlerInputBuscarKeyDown,
-            handlerEliminarClick } = CategoriasListLogic()
+            handlerEliminarClick } = CategoriasListLogic();
 
     if(loading) return (<Loader active inline='centered'>Cargando ...</Loader>)
 

@@ -1,4 +1,4 @@
-const CategoriasFormHtml = (props) => {
+const CategoriasFormHtml = (props: any): React.ReactElement => {
     const { 
         id, 
         formData, 
