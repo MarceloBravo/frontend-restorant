@@ -1,1 +1,1 @@
-export { default } from './AdminUsersForm.jsx';
+export { default } from './AdminUsersForm.tsx';

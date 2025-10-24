@@ -31,7 +31,6 @@ export const getUsers = (token: string, searchTerm: string = '') => (dispatch: a
  * Es un thunk de Redux que despacha acciones para actualizar el estado del usuario o manejar errores.
  * @param {number} id - El ID del usuario a obtener.
  * @param {string} token - El token de autenticación.
- * @returns {Function} Un thunk de Redux.
  */
 export const getUserById = (id: number, token: string) => (dispatch: any): void => {
     const config: Object = { headers: { Authorization: `Bearer ${token}` }};    

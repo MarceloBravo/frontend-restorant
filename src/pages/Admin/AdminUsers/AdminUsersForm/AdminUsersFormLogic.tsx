@@ -6,6 +6,7 @@ import { getLocalStorage } from '../../../../shared/storage'
 import { clearError } from '../../../../store/slices/statusSlice'
 import { toast } from 'react-toastify'
 import { openModal } from '../../../../store/slices/ModalSlices'
+import { UserClass } from '../../../../class/UserClass'
 
 /**
  * Lógica del formulario de usuarios para el panel de administración.
@@ -14,29 +15,21 @@ import { openModal } from '../../../../store/slices/ModalSlices'
  */
 const AdminUsersFormLogic = () => {
     const param = useParams()
-    const id = param.id ? param.id : null
-    const [ accion, setAccion ] = useState(null)
-    const [ formData, setFormData ] = useState({
-        first_name: '',
-        last_name: '',
-        username: '',
-        password: '',
-        email: '',
-        is_active: false,
-        is_staff: false,
-    })
-    const access = getLocalStorage('access')
-    const user = useSelector(state => state.users.user)
-    const status = useSelector(state => state.status)
-    const modal = useSelector(state => state.modal)
-    const dispatch = useDispatch()
+    const id: string | null = param.id ? param.id : null
+    const [ accion, setAccion ] = useState<string | null>(null)
+    const [ formData, setFormData ] = useState(new UserClass())
+    const access: string | null= getLocalStorage('access')
+    const user = useSelector((state: any) => state.users.user)
+    const status = useSelector((state: any) => state.status)
+    const modal = useSelector((state: any) => state.modal)
+    const dispatch = useDispatch<any>()
     const navigate = useNavigate()
 
     dispatch(clearError())
     
     useEffect(() => {   
-        if(id) {
-            dispatch(getUserById(id, access))
+        if(id && access) {
+            dispatch(getUserById(Number(id), access))
         }
     }, [id])
 
@@ -56,7 +49,7 @@ const AdminUsersFormLogic = () => {
      * redirige al usuario al listado de usuarios.
      */
     useEffect(() => {
-        if(status.code !== null &&status?.message === null){            
+        if(status.code !== null &&status?.message === null && accion){            
             switch(accion){
                 case 'Nuevo':
                     toast.success('Usuario creado con éxito')
@@ -85,13 +78,13 @@ const AdminUsersFormLogic = () => {
      * y ejecuta la acción correspondiente
      */
     useEffect(() => {
-        if(modal.isOkClicked){  //Se seleccionó el botón de aceptar en el modal
+        if(modal.isOkClicked && access){  //Se seleccionó el botón de aceptar en el modal
             if(accion === 'Nuevo' || accion === 'Editar'){
                 // Grabar datos
                 dispatch(saveUser(formData, access))
             }else if(accion === 'Eliminar'){
                 // Eliminar usuario
-                dispatch(deleteUser(id, access))
+                dispatch(deleteUser(Number(id), access))
             }
         }
     },[modal])
@@ -101,7 +94,7 @@ const AdminUsersFormLogic = () => {
      * Maneja el cambio en los inputs del formulario.
      * @param {object} e - Evento del input.
      */
-    const handlerInputChange = (e) => {
+    const handlerInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
         setFormData({
             ...formData,
@@ -113,7 +106,7 @@ const AdminUsersFormLogic = () => {
      * Maneja el click en el botón de cancelar.
      * Redirige al listado de usuarios.
      */
-    const handlerCancelarClick = () => {
+    const handlerCancelarClick = (): void => {
         navigate('/admin/users')
     }
 
@@ -121,7 +114,7 @@ const AdminUsersFormLogic = () => {
      * Maneja el click en el botón de grabar.
      * Valida los datos y abre el modal de confirmación.
      */
-    const handlerGrabarClick = () => {
+    const handlerGrabarClick = (): void => {
         // Configura la acción a realizar (nuevo o editar)
         setAccion(id ? 'Editar' : 'Nuevo')
         // Validar datos
@@ -139,7 +132,7 @@ const AdminUsersFormLogic = () => {
      * Maneja el click en el botón de eliminar.
      * Abre el modal de confirmación para eliminar el usuario.
      */
-    const handlerEliminarClick = () => {
+    const handlerEliminarClick = (): void => {
         setAccion('Eliminar')
         dispatch(openModal({
             title: 'Eliminar usuario', 

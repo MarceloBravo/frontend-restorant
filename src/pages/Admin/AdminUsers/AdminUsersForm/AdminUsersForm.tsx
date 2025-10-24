@@ -2,7 +2,7 @@ import AdminUsersFormLogic from './AdminUsersFormLogic'
 
 import './AdminUsersForm.scss'
 
-const AdminUsersForm = () => {
+const AdminUsersForm: React.FC = () => {
     const { handlerInputChange,
             handlerCancelarClick,
             handlerGrabarClick,
@@ -85,7 +85,7 @@ const AdminUsersForm = () => {
                         type="checkbox" 
                         onChange={e => handlerInputChange(e)}
                         id="is_active" 
-                        value={formData.is_active}
+                        value={formData.is_active ? 'true' : 'false'}
                         checked={Boolean(formData.is_active)}/>
                 </div>
             </div>
@@ -98,7 +98,7 @@ const AdminUsersForm = () => {
                         type="checkbox" 
                         onChange={e => handlerInputChange(e)}
                         id="is_staff" 
-                        value={formData.is_staff}
+                        value={formData.is_staff ? 'true' : 'false'}
                         checked={Boolean(formData.is_staff)}/>
                 </div>
             </div>
