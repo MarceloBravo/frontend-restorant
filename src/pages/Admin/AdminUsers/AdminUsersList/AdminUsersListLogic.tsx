@@ -6,22 +6,23 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { resetUser } from '../../../../store/slices/usersSlices'
 import { openModal } from '../../../../store/slices/ModalSlices'
+import { AdminUserListLogicInterface } from '../../../../interfaces/AdminUserListLogicInterface'
 
 /**
  * Lógica del listado de usuarios para el panel de administración.
  * Se encarga de la carga, filtrado y eliminación de usuarios.
- * @returns {object} - Funciones y estado para el listado de usuarios.
+ * @returns {AdminUserListLogicInterface} - Funciones y estado para el listado de usuarios.
  */
-const AdminUsersListLogic = () => {
+const AdminUsersListLogic = (): AdminUserListLogicInterface => {
   const [ textoBuscado, setTextoBuscado ] = useState('')
   const [ eliminado, setEliminado ] = useState(false)
   const [users, setUsers] = useState([])
-  const [ deleteId, setDeleteId ] = useState(null)
-  const data = useSelector(state => state.users.users)
-  const status = useSelector(state => state.status)
-  const modal = useSelector(state => state.modal)
-  const access = getLocalStorage('access')
-  const dispatch = useDispatch()
+  const [ deleteId, setDeleteId ] = useState<number | null>(null)
+  const data = useSelector((state: any) => state.users.users)
+  const status = useSelector((state: any) => state.status)
+  const modal = useSelector((state: any) => state.modal)
+  const access: string | null = getLocalStorage('access')
+  const dispatch = useDispatch<any>()
   const navigate = useNavigate()
   
   
@@ -69,7 +70,7 @@ const AdminUsersListLogic = () => {
    * Este flag es utilizado por el `useEffect` anterior para manejar el resultado y mostrar la notificación final.
    */
   useEffect(() => {
-    if(modal.isOkClicked && deleteId){  //Se seleccionó el botón de aceptar en el modal
+    if(modal.isOkClicked && deleteId && access){  //Se seleccionó el botón de aceptar en el modal
       dispatch(deleteUser(deleteId, access))
       setEliminado(true)
       setDeleteId(null)
@@ -81,10 +82,9 @@ const AdminUsersListLogic = () => {
   /**
    * Maneja el click en el botón de nuevo usuario.
    * Redirige al formulario de nuevo usuario.
-   * @param {object} e - Evento del botón.
+   * @param {React.MouseEvent<HTMLButtonElement>} e - Evento del botón.
    */
-  const handlerBtnNuevoClick = (e) => {
-    e.preventDefault()
+  const handlerBtnNuevoClick = (): void => {
     dispatch(resetUser())
     navigate('/admin/users/nuevo')
   }
@@ -95,7 +95,7 @@ const AdminUsersListLogic = () => {
    * Redirige al formulario de edición de usuario.
    * @param {number} id - Id del usuario a editar.
    */
-  const handlerEditarClick = (id) => {
+  const handlerEditarClick = (id: number): void => {
     navigate(`/admin/users/${id}`)
   }
 
@@ -104,7 +104,7 @@ const AdminUsersListLogic = () => {
    * Abre el modal de confirmación para eliminar el usuario.
    * @param {number} id - Id del usuario a eliminar.
    */
-  const handlerEliminarClick = (id) => {
+  const handlerEliminarClick = (id: number): void => {
     dispatch(openModal({
       title: 'Eliminar usuario', 
       message: '¿Está seguro que desea eliminar este usuario?', 
@@ -116,9 +116,9 @@ const AdminUsersListLogic = () => {
 
   /**
    * Maneja el cambio en el input de búsqueda.
-   * @param {object} e - Evento del input.
+   * @param {React.ChangeEvent<HTMLInputElement>} e - Evento del input.
    */
-  const handlerInputBuscarChange = (e) => {
+  const handlerInputBuscarChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
     setTextoBuscado(e.target.value)
   }
@@ -126,9 +126,9 @@ const AdminUsersListLogic = () => {
   /**
    * Maneja el keydown en el input de búsqueda.
    * Si la tecla es Enter, realiza la búsqueda.
-   * @param {object} e - Evento del input.
+   * @param {React.KeyboardEvent<HTMLInputElement>} e - Evento del input.
    */
-  const  handlerInputBuscarKeyDown = (e) => {
+  const  handlerInputBuscarKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
    if(e.key === 'Enter'){
          dispatch(getUsers(getLocalStorage('access'), textoBuscado))
     } 

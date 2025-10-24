@@ -3,7 +3,7 @@ import AdminUsersListLogic from './AdminUsersListLogic'
 
 import './AdminUsersList.scss'
 
-const AdminUsersList = () => {
+const AdminUsersList: React.FC = () => {
     const { textoBuscado,
             users,
             handlerInputBuscarChange,
