@@ -51,6 +51,7 @@ export const getCategoria = async (id: number) => {
  */
 export const updateCategory = async (category: CategoryClass, token: string): Promise<any> => {
     try {
+        if(typeof category.image === 'string') category.image = null;
         const formData = createForm(category);
         const config = {
             headers: {
