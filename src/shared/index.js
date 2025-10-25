@@ -1,1 +1,1 @@
-export * from './validaciones.js'
+export * from './validaciones.ts'

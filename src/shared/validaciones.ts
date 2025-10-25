@@ -9,8 +9,8 @@
  * @param {string} email - El correo electrónico a validar.
  * @returns {boolean} `true` si el correo es válido, `false` en caso contrario.
  */
-export const validaEmail = (email) => {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const validaEmail = (email: string): boolean => {
+  const regex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(email);
 }
 
@@ -19,11 +19,11 @@ export const validaEmail = (email) => {
  * @param {string} token - El token JWT a decodificar.
  * @returns {object|null} El payload del token como un objeto, or `null` si el token es inválido.
  */
-export const parseJwt = (token) => {
+export const parseJwt = (token: string): object | null => {
   try {
-    const base64Url = token.split('.')[1]; // el payload es la segunda parte
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(
+    const base64Url: string = token.split('.')[1]; // el payload es la segunda parte
+    const base64: string = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload: string = decodeURIComponent(
       atob(base64)
         .split('')
         .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
@@ -41,10 +41,10 @@ export const parseJwt = (token) => {
  * @param {string} token - El token JWT a verificar.
  * @returns {boolean} `true` si el token ha expirado o es inválido, `false` en caso contrario.
  */
-export const isTokenExpired = (token) => {
-  const payload = parseJwt(token);
-  if (!payload || !payload.exp) return true; // inválido o sin exp
+export const isTokenExpired = (token: string): boolean => {
+  const payload: any = parseJwt(token);
+  if (!payload || payload.exp === undefined) return true; // inválido o sin exp
 
-  const now = Math.floor(Date.now() / 1000); // segundos actuales
+  const now: number = Math.floor(Date.now() / 1000); // segundos actuales
   return payload.exp < now;
 }
