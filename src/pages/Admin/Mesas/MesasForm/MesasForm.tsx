@@ -1,7 +1,7 @@
 import React from 'react'
 import { MesasFormLogic } from './MesasFormLogic';
 
-const MesasForm = () => {
+const MesasForm = (): React.ReactElement => {
     const { 
         id,
         errors,

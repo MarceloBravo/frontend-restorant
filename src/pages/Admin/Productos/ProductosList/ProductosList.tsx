@@ -1,10 +1,8 @@
-import type { FC } from 'react';
 import { Grid } from '../../../../components/Grid'
-import { ProductosListLogicInterface } from '../../../../interfaces/ProductosListInterface';
 import { useProductosListLogic } from './useProductosListLogic'
 
 
-const ProductosList: FC<ProductosListLogicInterface> = () => {
+const ProductosList = (): React.ReactElement => {
   const { 
     handlerBtnNuevoClick, 
     handlerEditarClick, 
