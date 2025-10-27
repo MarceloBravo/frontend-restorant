@@ -40,11 +40,12 @@ export const useUserSession = (): { userData: UserClass | null, isUserlogued: bo
             setUserData(user)
         }
     }
+    // eslint-disable-next-line
     ,[user])
 
     useEffect(() => {
         const idInterval =setInterval(() => {
-            console.log('Verificando token...'  )
+            //console.log('Verificando token...'  )
             finalizarSession()
         }, interval);
         setIntervalId(idInterval)
@@ -60,7 +61,7 @@ export const useUserSession = (): { userData: UserClass | null, isUserlogued: bo
 
     const finalizarSession = (): void => {
         const tokenValido: boolean = (!accessToken || isTokenExpired(accessToken) === false);
-        console.log( isTokenExpired(accessToken) ? 'Token valido' : 'Token expirado')
+        //console.log( tokenValido ? 'Token valido' : 'Token expirado')
         if(isUserlogued === true && tokenValido === false && location.pathname !== '/admin/login'){
             dispatch(logOut())
             clearLocalStorage()

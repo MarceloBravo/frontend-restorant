@@ -77,7 +77,6 @@ export const useProductosListLogic = (): ProductosListLogicInterface => {
    * @param e - Evento de clic del botón.
    */
   const handlerBtnNuevoClick = (e: any): void => {
-    e.preventDefault()
     navigate(`/admin/productos/nuevo`)
   }
 

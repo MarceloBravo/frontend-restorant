@@ -99,7 +99,6 @@ export const GridLogic = (props: GridLogicPropsInterface): any => {
      * @returns {*} - El valor formateado.
      */
     const formatearValor = (value: string | number | ImageBitmap | Date | boolean, type?: string | null): any => {
-      console.log('Formateando valor:', value, 'de tipo:', type);
       const tipo: string = type ?? typeof value;
       switch(tipo){
         case 'image':

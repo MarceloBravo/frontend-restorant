@@ -19,7 +19,6 @@ const ProductosList: FC<ProductosListLogicInterface> = () => {
     <div className="main-container">
         <h1>Productos</h1>
         {listar?.isLoading && <p>Cargando...</p>}
-        { console.log(listar.data) }
         <Grid 
             data={listar.data?.data || []} 
             headers={['ID', 'Nombre', 'Descripción', 'imágen','Precio','Activo','Categoría', 'Fecha creación', 'Fecha modificación']} 

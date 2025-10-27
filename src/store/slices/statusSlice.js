@@ -8,7 +8,6 @@ const statusSlice = createSlice({
     },  
     reducers: {
         setStatus: (state, action) => {
-            console.log('setStatus', action.payload)
             state.code = action.payload.code ?? 200
             state.message = action.payload.message ?? null
         },

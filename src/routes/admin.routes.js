@@ -1,6 +1,8 @@
 import { AdminLayout } from "../layouts";
 import { AdminHome, AdminUsersList, AdminUsersForm, LoginAdmin, CategoriasList } from "../pages";
 import CategoriasForm from "../pages/Admin/Categorias/CategoriasForm/CategoriasForm";
+import MesasForm from "../pages/Admin/Mesas/MesasForm/MesasForm";
+import MesasList from "../pages/Admin/Mesas/MesasList/MesasList";
 import ProductosList from "../pages/Admin/Productos";
 import ProductoForm from "../pages/Admin/Productos/ProductosForm/ProductoForm";
 //import { AdminUsersList } from "../pages/Adin/AdminUsers/AdminUsersList/AdminUsersList";
@@ -70,6 +72,24 @@ const AdminRoutes = [
         layout: AdminLayout,
         component: ProductoForm,
         menu: 'productos'
+    },
+    {
+        path: '/admin/mesas',
+        layout: AdminLayout,
+        component: MesasList,
+        menu: 'mesas'
+    },
+    {
+        path: '/admin/mesas/nuevo',
+        layout: AdminLayout,
+        component: MesasForm,
+        menu: 'mesas'
+    },
+    {
+        path: '/admin/mesas/:id',
+        layout: AdminLayout,
+        component: MesasForm,
+        menu: 'mesas'
     },
 ];
 
