@@ -1,0 +1,30 @@
+.table-container{
+    display: flex;
+    width: -webkit-fill-available;
+
+    .table-item{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: nowrap;
+
+        .orders-count{
+            min-width: 20px;
+            border-radius: 10px;
+            background: #ff4900;
+            color: white;
+            position: absolute;
+        }
+        
+        .img-table{
+            width: 150px;
+            height: 150px;
+        }
+        
+    }
+    .table-info{
+        display: flex;
+        flex-direction: column;
+        gap: 10px
+    }
+}

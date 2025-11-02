@@ -1,0 +1,50 @@
+.table-container{
+    display: flex;
+
+    .table-item{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+        cursor: pointer;
+
+        .table-group-info{
+                height: 20px;
+
+            .orders-count-pending,
+            .orders-count-delivered,
+            .orders-count-canceled{
+                min-width: 20px;
+                border-radius: 10px;
+                color: white;
+                position: relative;
+                margin: 0px 5px;
+            }
+            
+            .orders-count-pending{
+                background: #ff4900;
+            }
+
+            .orders-count-delivered{
+                background: hwb(137 1% 39%);
+            }
+
+            .orders-count-canceled{
+                background: hsl(0, 100%, 50%);
+            }
+
+        }
+        
+        .img-table{
+            width: 150px;
+            height: 150px;
+        }
+        
+    }
+    .table-info{
+        display: flex;
+        flex-direction: column;
+        gap: 10px
+    }
+}

@@ -1,0 +1,24 @@
+.card-order-detail{
+    position: relative;
+
+    .orden-detail{
+        display: flex;
+        margin: 20px 5px;
+        border: solid thin;
+        padding: 10px 5px;
+
+        .img-producto{
+            width: 100px;
+            height: 100px;
+        }
+
+        div > .time-order{
+            position: absolute;
+            top: -10px;
+            width: fit-content;
+            background-color: white;
+            border: solid thin;
+            right: 20px;
+        }
+    }
+}

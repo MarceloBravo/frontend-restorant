@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { GridLogicPropsInterface } from '../../interfaces/Components/GridLogicPropsInterface';
+import { formatDate } from '../../shared/functions';
 
 
 /**
@@ -109,15 +110,10 @@ export const GridLogic = (props: GridLogicPropsInterface): any => {
           const date = new Date(value.toString());
           return date.getDate().toString();
         case 'date-dm':
-          const dateDm = new Date(value.toString());
-          return (dateDm.getDate().toString().padStart(2, '0') + '/' + (dateDm.getMonth() + 1).toString().padStart(2, '0'));
         case 'date-dma':
-          const dateDma = new Date(value.toString());
-          return (dateDma.getDate().toString().padStart(2, '0') + '/' + (dateDma.getMonth() + 1).toString().padStart(2, '0') + '/' + dateDma.getFullYear().toString());
         case 'date-dmah':
-          const dateDmah = new Date(value.toString());
-          return (dateDmah.getDate().toString().padStart(2, '0') + '/' + (dateDmah.getMonth() + 1).toString().padStart(2, '0') + '/' + dateDmah.getFullYear().toString()+ dateDmah.getHours().toString().padStart(2, '0') + ':' + dateDmah.getMinutes().toString().padStart(2, '0'));
         case 'date':
+          return formatDate(value.toString(), tipo);
         case 'number':
         case 'text':          
           return value

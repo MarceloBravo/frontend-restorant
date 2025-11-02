@@ -1,19 +1,21 @@
 import { AdminLayout } from "../layouts";
-import { AdminHome, AdminUsersList, AdminUsersForm, LoginAdmin, CategoriasList } from "../pages";
+import { AdminUsersList, AdminUsersForm, LoginAdmin, CategoriasList } from "../pages";
 import CategoriasForm from "../pages/Admin/Categorias/CategoriasForm/CategoriasForm";
 import MesasForm from "../pages/Admin/Mesas/MesasForm/MesasForm";
 import MesasList from "../pages/Admin/Mesas/MesasList/MesasList";
+import { OrdenesDetail } from "../pages/Admin/Ordenes/OrdenesDetail/OrdenesDetail";
+import OrdenesList from "../pages/Admin/Ordenes/OrdenesList/OrdenesList.tsx";
 import ProductosList from "../pages/Admin/Productos";
 import ProductoForm from "../pages/Admin/Productos/ProductosForm/ProductoForm";
 //import { AdminUsersList } from "../pages/Adin/AdminUsers/AdminUsersList/AdminUsersList";
 
 const AdminRoutes = [
-    {
+    /*{
         path: '/admin/home',
         layout: AdminLayout,
         component: AdminHome,
         menu: 'home'
-    },
+    },*/
     {
         path: '/admin/login',
         layout: null,
@@ -90,6 +92,18 @@ const AdminRoutes = [
         layout: AdminLayout,
         component: MesasForm,
         menu: 'mesas'
+    },
+    {
+        path: '/admin/home',
+        layout: AdminLayout,
+        component: OrdenesList,
+        menu: 'home'
+    },
+    {
+        path: '/admin/ordenes/:mesaId',
+        layout: AdminLayout,
+        component: OrdenesDetail,
+        menu: 'home'
     },
 ];
 

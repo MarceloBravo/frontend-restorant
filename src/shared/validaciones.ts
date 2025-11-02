@@ -48,3 +48,4 @@ export const isTokenExpired = (token: string): boolean => {
   const now: number = Math.floor(Date.now() / 1000); // segundos actuales
   return payload.exp < now;
 }
+
