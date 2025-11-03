@@ -8,8 +8,8 @@ const host = process.env.REACT_APP_BACKEND_URL;
  * @param id - El ID de la mesa a obtener.
  * @returns Una promesa que se resuelve con los datos de la mesa.
  */
-export const getMesaById = async (id: number): Promise<any> => {
-    return axios.get(`${host}/api/tables/${id}/`);
+export const getMesaById = async (id: number, orderString: string = ''): Promise<any> => {
+    return axios.get(`${host}/api/tables/${id}/`+orderString);
 }
 
 /**

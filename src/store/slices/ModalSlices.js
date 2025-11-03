@@ -8,7 +8,7 @@ const ModalSlices = createSlice({
         message: null,
         btnAceptarText: 'Aceptar',
         btnCancelarText: 'Cancelar',
-        isOkClicked: false
+        isOkClicked: null
     },
     reducers: {
         openModal: (state, action) => {
@@ -17,7 +17,7 @@ const ModalSlices = createSlice({
             state.message = action.payload.message ?? 'Selecciona un opción'
             state.btnAceptarText = action.payload.btnAceptarText ?? 'Aceptar'
             state.btnCancelarText = action.payload.btnCancelarText ?? 'Cancelar'
-            state.isOkClicked = false
+            state.isOkClicked = null
         },
         closeModal: (state) => {
             state.isOpen = false

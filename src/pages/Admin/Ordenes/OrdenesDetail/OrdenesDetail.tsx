@@ -1,34 +1,45 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-//import { UseOrders } from '../../../../Hooks/UseOrders'
-import { useMesas } from '../../../../Hooks/useMesas'
-import { CardOrderDetail } from '../../../../components/CardOrderDetail/CardOrderDetail'
-import './OrdenesDetail.scss'
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { CardOrderDetail } from '../../../../components/CardOrderDetail/CardOrderDetail';
+import { UseOrders } from '../../../../Hooks/UseOrders';
+import { toast } from 'react-toastify';
+import './OrdenesDetail.scss';
 
 export const OrdenesDetail = () => {
     const param = useParams()
     const mesaId: string = param.mesaId ?? ''
-    const { buscarPorId } = useMesas('', parseInt(mesaId))
-    const [ orders, setOrders ] = useState([])
+    const { listar } = UseOrders(null, '?table=' + mesaId + '&ordering=-status,created_at', true);
+    const [ orders, setOrders ] = useState<any>([]);
     
-    //const { buscarPorId } = UseOrders(parseInt(mesaId))
-
     
     useEffect(()=> {
-        console.log('Buscando pedidos de la mesa ', mesaId);
         if(mesaId !== ''){
-            buscarPorId.refetch()    
+            listar.refetch();
         }
     },[])
 
     useEffect(()=> {
-        if(buscarPorId.error){
-            console.log('Mesa sin pedidos')
+        const raw = (listar as any);
+        const hasError = raw?.error;
+
+        if(hasError){
+            toast.info('Mesa sin pedidos');
         }else{
-            console.log('Listando los pedidos de la mesa ',buscarPorId.data)
-            setOrders(buscarPorId.data?.data.orders)
+            console.log('Listando los pedidos de la mesa ', raw?.data ?? raw)
+            // manejar listar cuando puede ser un array o un objeto con .data.data
+            let fetched: any[] = [];
+
+            if(Array.isArray(raw)){
+                fetched = raw;
+            } else if (raw?.data && Array.isArray(raw.data?.data)) {
+                fetched = raw.data.data;
+            } else if (Array.isArray(raw?.data)) {
+                fetched = raw.data;
+            }
+
+            setOrders(fetched)
         }
-    },[buscarPorId.data])
+    },[listar])
 
    
 

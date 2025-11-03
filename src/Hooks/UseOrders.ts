@@ -3,7 +3,7 @@ import { actualizarOrden, crearOrden, eliminarOrden, getOrdersById, listarOrdene
 import { OrdersClass } from '../class/OrdersClass'
 
 
-export const UseOrders = (id: number | null, searchTerm: string = '') => {
+export const UseOrders = (id: number | null, searchTerm: string = '', listEnabled: boolean = false) => {
     const queryClient = useQueryClient()
 
 
@@ -16,7 +16,7 @@ export const UseOrders = (id: number | null, searchTerm: string = '') => {
     const listar = useQuery({
         queryKey: ['orders', searchTerm],
         queryFn: () => listarOrdenes(searchTerm ?? null),
-        enabled: false
+        enabled: listEnabled
     })
 
     const crear = useMutation<any, Error, any>({

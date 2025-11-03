@@ -18,12 +18,9 @@ export const getOrdersById = (id: number): Promise<OrdersClass> => {
  * @param {string} [searchTerm=''] - Término de búsqueda para filtrar las órdenes.
  * @returns {Promise<OrdersClass[]>} Una promesa que se resuelve con la lista de órdenes.
  */
-export const listarOrdenes = (searchTerm: string = ''): Promise<OrdersClass[]> => {
-    let options = {};
-    if (searchTerm) {
-        options = { params: { search: searchTerm } };
-    }
-    return axios.get(host + '/api/orders/', options);
+export const listarOrdenes = (searchTerm: string = ''): Promise<any[]> => {
+    console.log(host + '/api/orders/'+searchTerm);
+    return axios.get(host + '/api/orders/'+searchTerm);
 }
 
 
@@ -51,7 +48,6 @@ export const actualizarOrden = (order: OrdersClass, token: string): Promise<Orde
     const data = { ...order };
     return axios.put(host + '/api/orders/' + order.id + '/', data, headers);
 }
-
 
 /**
  * Elimina una orden por su ID.

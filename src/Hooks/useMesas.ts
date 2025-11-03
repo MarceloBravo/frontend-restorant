@@ -8,7 +8,7 @@ import { MesasClass } from "../class/MesasClass";
  * @param mesaId - ID de la mesa para buscar.
  * @returns Un objeto con funciones para listar, buscar por ID, crear, actualizar y eliminar mesas.
  */
-export const useMesas = (searchTerms: string = '', mesaId: number | null = null) => {
+export const useMesas = (searchTerms: string = '', mesaId: number | null = null, orderString: string = '') => {
     const queryClient = useQueryClient()
     
     /**
@@ -25,7 +25,7 @@ export const useMesas = (searchTerms: string = '', mesaId: number | null = null)
      */
     const buscarPorId = useQuery({
         queryKey: ['mesas', mesaId],
-        queryFn: () => mesaId ? getMesaById(mesaId) : null,
+        queryFn: () => mesaId ? getMesaById(mesaId, orderString) : null,
         enabled: false
     })
 
@@ -39,6 +39,7 @@ export const useMesas = (searchTerms: string = '', mesaId: number | null = null)
         },
         onSuccess: () => queryClient.invalidateQueries({queryKey: ['mesas']})
     })
+
 
     /**
      * Mutación para actualizar una mesa existente.
