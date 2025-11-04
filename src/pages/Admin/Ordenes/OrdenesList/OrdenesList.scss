@@ -1,3 +1,58 @@
+.pedidos-top-menu{
+    display: flex;
+    justify-content: flex-end;
+
+    .form-check{
+        display: flex;
+        align-items: center;
+        /* pone label a la izquierda y checkbox a la derecha dentro del mismo contenedor */
+        justify-content: space-between;
+        padding-right: 30.5px;
+
+        .form-check-label{
+            cursor: pointer;
+            flex: 1 1 auto; /* toma el espacio restante */
+            z-index: 1;
+            /* evita que el label se superponga al input: */
+            pointer-events: auto;
+        }
+
+        .form-check-input{
+            flex: 0 0 auto;
+            margin-left: 0.5rem;
+            position: relative;
+            z-index: 2; /* aseguramos que el checkbox quede por encima si hay solapamiento */
+            /* evitar floats que causen problemas */
+            float: none !important;
+            cursor: pointer;
+        }
+    }
+
+    .refresh-orders{
+        cursor: pointer;
+
+        .icon{
+            font-size: 1.5em;
+            color: #3498db !important;
+            margin: 0px;
+        }
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.refreshing .icon {
+    animation: spin 3s cubic-bezier(0.2, 3, 1.0, 1);
+}
+
+
 .table-container{
     display: flex;
     width: -webkit-fill-available;
