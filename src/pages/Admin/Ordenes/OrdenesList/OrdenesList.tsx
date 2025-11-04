@@ -9,7 +9,7 @@ import './OrdenesList.scss'
 const OrdenesList = () => {
   const [ autoRefresh, setAutoRefresh ] = useState<boolean>(false)
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const REFRESHTIME_5MIN = 150000;
+  const REFRESHTIME_5MIN = 300000;
   const { handlerEditarClick } = useOrdenesList()
   const refreshButton = useRef<HTMLDivElement | null>(null)
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
