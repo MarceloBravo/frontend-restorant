@@ -3,13 +3,17 @@ import MesaRestorant2 from '../../assets/png/MesaRestorant2.png'
 import { UseCardMesa } from './UseCardMesa'
 import './CardMesa.scss'
 
-const CardMesa: React.FC = (props: any) => {
-    const { handlerEditarClick } = props;
-    const { item, imgMesaId, info } = UseCardMesa(props);
+interface CardMesaProps {
+  item: any;
+  handlerEditarClick: (id: number) => void;
+}
+
+const CardMesa: React.FC<CardMesaProps> = ({ item, handlerEditarClick }) => {
+    const { imgMesaId, info } = UseCardMesa({ item });
     
 
   return (
-    <div key={item.id} className="table-item" title="Click para ver los detalles" onClick={() => handlerEditarClick(item.id)}>
+    <div key={item.id} className="table-item" title="Click para ver los detalles" onClick={() => handlerEditarClick(parseInt(item.id))}>
         <div className="table-info">
             <label htmlFor={imgMesaId}>Mesa {item?.number ?? 'sin número'}</label>
         </div>
