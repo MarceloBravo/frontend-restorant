@@ -3,7 +3,7 @@
 
     .orden-detail{
         display: flex;
-        margin: 20px 5px;
+        margin: 20px 0px;
         border: solid thin;
         padding: 10px 5px;
 
@@ -41,6 +41,12 @@
             right: 20px;
             top: 5vh;
         }
+        
+        .delete_order_button{
+            position: absolute;
+            right: 20px;
+            top: 12vh;
+        }
 
         .order_detail_status{
             color: white;
@@ -52,15 +58,15 @@
 }
 
 .order_pending{
-    background-color: rgb(255, 165, 47, 0.35);
+    background-color: rgb(255 150 47 / 76%);
 }
 
-.order_cancelled{
+.order_canceled{
     background-color: rgb(47, 210, 255, 0.35);
 }
 
 .order_delivered{
-    background-color: rgb(57, 255, 47, 0.35);
+    background-color: #20df06;
 }
 
 .order_closed{

@@ -1,12 +1,10 @@
 import { useEffect, useId, useState } from 'react'
 import { InfoPedidosInterface } from '../../interfaces/Pedidos/InfoPedidosInterface';
-import { useNavigate } from 'react-router-dom';
 
 export const UseCardMesa = (props: any) => {
     const { item } = props;
     const imgMesaId = useId();
     const [ info, setInfo ] = useState<InfoPedidosInterface | null>()
-    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -18,7 +16,7 @@ export const UseCardMesa = (props: any) => {
       const info: InfoPedidosInterface = {
         pending: ordenes.filter((orden: any) => orden.status === 'pending').length,
         delivered: ordenes.filter((orden: any) => orden.status === 'delivered').length,
-        cancelled: ordenes.filter((orden: any) => orden.status === 'cancelled').length,
+        canceled: ordenes.filter((orden: any) => orden.status === 'canceled').length,
         closed: ordenes.filter((orden: any) => orden.status === 'closed').length,
         total: ordenes.length,
       }

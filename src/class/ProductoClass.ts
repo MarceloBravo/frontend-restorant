@@ -1,5 +1,3 @@
-import { CategoryClass } from "./CategoryClass";
-
 export class ProductoClass {
     id?: string | null = null;
     title: string = '';

@@ -1,4 +1,17 @@
 .order-detail-container{
     width: -webkit-fill-available;
     padding: 0px 10px;
+    overflow: auto;
+
+    .order-detail-header{
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0px;
+
+        .btn-success{
+            background-color: #01e101;
+            border-color: #59ff59;
+            height: fit-content;
+        }
+    }
 }

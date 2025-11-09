@@ -21,8 +21,8 @@ const CardMesa = (props: any) => {
             {info && info.delivered > 0 && (
                 <label className="orders-count-delivered" title='Ordenes entregados'>{info.delivered}</label>
             )}
-            {info && info.cancelled > 0 && (
-                <label className="orders-count-canceled" title='Ordenes cancelados'>{info.cancelled}</label>
+            {info && info.canceled > 0 && (
+                <label className="orders-count-canceled" title='Ordenes cancelados'>{info.canceled}</label>
             )}
         </div>
     </div>

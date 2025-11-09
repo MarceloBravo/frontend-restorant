@@ -1,7 +1,7 @@
 export interface InfoPedidosInterface{
         pending: number;
         delivered: number;
-        cancelled: number;
+        canceled: number;
         closed: number;
         total: number;
       }

@@ -1,9 +1,9 @@
 import { LoginForm } from '../../../components/Admin'
-import LoginAdminLogic from './LoginAdminLogic.js';
+import LoginAdminLogic from './LoginAdminLogic';
 
 import "./LoginAdmin.scss"
 
-export default function LoginAdmin() {
+const LoginAdmin = () => {
   const { formData,
           formError,
           loading,
@@ -29,3 +29,5 @@ export default function LoginAdmin() {
     </div>
   )
 }
+
+export default LoginAdmin;

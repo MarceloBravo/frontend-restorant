@@ -8,23 +8,31 @@ import { toast } from 'react-toastify';
 
 export const useCardOrderDetail = (orden: OrdersClass) => {
     const [ order, setOrder ] = useState(orden);
-    const { actualizar, listar } = UseOrders(null, '', true);
+    const { actualizar, listar, eliminar } = UseOrders(null, '', true);
     const modalState = useSelector((state: any) => state.modal);
     const dispatch = useDispatch();
     const [isWaitingForConfirmation, setWaitingForConfirmation] = useState(false);
+    const [ accion, setAccion ] = useState<string>('');
+
+
 
     useEffect(()=> {
         if(!isWaitingForConfirmation){
             return;
         }
-        if(modalState.isOkClicked){
-            actualizar.mutate(order);
-        }else if(modalState.isOkClicked === false){
-            setOrder({...order, status: status_enum.PENDING});
+        if(accion === 'deliver'){
+            if(modalState.isOkClicked){
+                actualizar.mutate(order);
+            }else if(modalState.isOkClicked === false){
+                setOrder({...order, status: status_enum.PENDING});
+            }
+            if(modalState.isOkClicked !== null){
+                setWaitingForConfirmation(false);
+                dispatch(closeModal()); // Reset modal state
+            }
         }
-        if(modalState.isOkClicked !== null){
-            setWaitingForConfirmation(false);
-            dispatch(closeModal()); // Reset modal state
+        if(accion === 'delete' && modalState.isOkClicked){
+            eliminar.mutate(order.id);
         }
         // eslint-disable-next-line
     }, [modalState.isOkClicked])
@@ -57,9 +65,27 @@ export const useCardOrderDetail = (orden: OrdersClass) => {
             btnAceptarText: 'Si, entregar pedido',
             btnCancelarText: 'Cancelar',
         }));
+        setAccion('deliver');
+    }
+
+    const handleBtnDeleteOrder = () => {
+        if(order.status !== status_enum.PENDING){
+            toast.info('El pedido no está pendiente');
+            return;
+        }
+        setWaitingForConfirmation(true);
+        dispatch(openModal({
+            isOpen: true,
+            title: 'Cancelar pedido',
+            message: '¿Desea eliminar el pedido?',
+            btnAceptarText: 'Si, eliminar pedido',
+            btnCancelarText: 'Cancelar',
+        }));
+        setAccion('delete');
     }
 
   return {
-    handleBtnDeliveredOrder
+    handleBtnDeliveredOrder,
+    handleBtnDeleteOrder
   }
 }

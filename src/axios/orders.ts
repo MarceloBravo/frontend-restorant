@@ -46,6 +46,7 @@ export const crearOrden = (order: OrdersClass, token: string): Promise<OrdersCla
 export const actualizarOrden = (order: OrdersClass, token: string): Promise<OrdersClass> => {
     const headers = prepareHeaders(token);
     const data = { ...order };
+    console.log('********************\n',host + '/api/orders/' + order.id + '/', data, headers);
     return axios.put(host + '/api/orders/' + order.id + '/', data, headers);
 }
 

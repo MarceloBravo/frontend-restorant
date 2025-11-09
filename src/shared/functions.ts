@@ -13,3 +13,10 @@ export const formatDate = (strDate: string = '', format: string = '') => {
             return strDate;
     }
 }
+
+export const formatNumber = (num: number) => {
+    if (num === null || num === undefined) {
+        return '0';
+    }
+    return Math.trunc(num).toLocaleString('en-US').replace(/,/g, '.');
+}

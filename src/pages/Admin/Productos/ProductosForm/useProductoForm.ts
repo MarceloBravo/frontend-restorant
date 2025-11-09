@@ -39,6 +39,7 @@ const useProductoForm = (): ProductoFormHtmlInterface => {
     }
   
     listarCategorias();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(()=>{
@@ -46,6 +47,7 @@ const useProductoForm = (): ProductoFormHtmlInterface => {
         setFormData(ver.data.data);
         setImageUrl(ver.data.data.image || null);
       }
+      // eslint-disable-next-line
   }, [ver.fetchStatus]);
 
   /**
@@ -73,7 +75,7 @@ const useProductoForm = (): ProductoFormHtmlInterface => {
       eliminar.reset();
       toast.error(`Ocurrió un error al ${accion} el producto.`);
     }
-
+    // eslint-disable-next-line
   },[nuevo, actualizar, eliminar]);
 
   /**
@@ -102,6 +104,7 @@ const useProductoForm = (): ProductoFormHtmlInterface => {
           break;
       }
     }
+    // eslint-disable-next-line
   }, [isOkClicked]);
 
   /**

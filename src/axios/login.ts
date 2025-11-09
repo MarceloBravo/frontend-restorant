@@ -2,21 +2,17 @@ import axios, { AxiosResponse} from 'axios';
 import { login, setUserData, logOut } from "../store/slices/loginSlices";
 import { clearLocalStorage } from "../shared/storage";
 import { setError, setStatus } from "../store/slices/statusSlice";
+import { formDataInterface } from '../interfaces/axios/FormDataInterface';
 
 const host = process.env.REACT_APP_BACKEND_URL
-
-interface formData {
-    email: string;
-    password: string;
-}
 
 /**
  * Realiza el login de un administrador.
  * Es un thunk de Redux que despacha acciones para manejar el estado de la autenticación.
- * @param {formData} formData - Objeto con el email y la contraseña del usuario.
+ * @param {formDataInterface} formData - Objeto con el email y la contraseña del usuario.
  * @returns {Function} Un thunk de Redux.
  */
-export const loginAdmin = (formData: formData) => (dispatch: any): void => {
+export const loginAdmin = (formData: formDataInterface) => (dispatch: any): void => {
     axios.post(`${host}/api/auth/login/`, { email: formData.email, password: formData.password }).then((resp: AxiosResponse) => {
         dispatch(login({ access: resp.data.access, refresh: resp.data.refresh }))
         dispatch(setStatus(null));

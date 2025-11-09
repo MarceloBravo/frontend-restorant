@@ -31,6 +31,7 @@ const AdminUsersFormLogic = () => {
         if(id && access) {
             dispatch(getUserById(Number(id), access))
         }
+        // eslint-disable-next-line
     }, [id])
 
 
@@ -38,6 +39,7 @@ const AdminUsersFormLogic = () => {
         if(user) {
             setFormData(user)
         }
+        // eslint-disable-next-line
     }, [user])
 
 
@@ -68,7 +70,7 @@ const AdminUsersFormLogic = () => {
         }else{
             toast.error(status?.message)
         }
-        
+        // eslint-disable-next-line
     }, [ status])
 
 
@@ -87,6 +89,7 @@ const AdminUsersFormLogic = () => {
                 dispatch(deleteUser(Number(id), access))
             }
         }
+        // eslint-disable-next-line
     },[modal])
 
     

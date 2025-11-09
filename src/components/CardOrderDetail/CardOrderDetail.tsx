@@ -5,7 +5,7 @@ import './CardOrderDetail.scss';
 
 export const CardOrderDetail = (props: any) => {
   const { order } = props;
-  const { handleBtnDeliveredOrder } = useCardOrderDetail(order);
+  const { handleBtnDeliveredOrder, handleBtnDeleteOrder } = useCardOrderDetail(order);
 
   return (
     <div key={order.id} className={'card-order-detail order_' + order.status}>
@@ -17,6 +17,7 @@ export const CardOrderDetail = (props: any) => {
             <div>$ {order.product_data?.price} x {order.quantity} = $ {order.total}</div>
           </div>
           {order.status === status_enum.PENDING && <button className='btn btn-primary custom_pending_button' onClick={handleBtnDeliveredOrder}>Entregar pedido</button>}
+          {order.status === status_enum.PENDING && <button className='btn btn-danger delete_order_button' onClick={handleBtnDeleteOrder}>Eliminar pedido</button>}
           {order.status === status_enum.DELIVERED && <div className="custom_pending_button order_detail_status">Entregado</div>}
         </div>
     </div>

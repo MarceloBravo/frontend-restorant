@@ -1,0 +1,65 @@
+.modal-background{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.37);
+}
+
+.modal-container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 50%;
+
+    .modal-body{
+        padding: 10px;
+
+        .modal-selected-list{
+            overflow-y: auto;
+            height: 60vh;
+            margin-top: 10px;
+
+            .modal-selected-item{
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                align-items: center;
+                padding: 5px 0px;
+
+                .img-product{
+                    width: 60px;
+                    height: 60px;
+                    object-fit: cover;
+                    border-radius: 15%;
+                }
+
+                .modal-selected-product-info{
+                    display: flex;
+                    flex-direction: column;
+                    flex-wrap: nowrap;
+                    align-items: flex-start;
+
+                    :first-child{
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+
+    .container-buttons{
+        display: flex;
+        justify-content: flex-end;
+
+        button{
+            margin-left: 10px;
+        }
+    }
+}

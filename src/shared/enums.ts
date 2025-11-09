@@ -1,6 +1,6 @@
 export const status_enum = {
     'DELIVERED': 'delivered',
-    'CANCELLED': 'cancelled',
+    'CANCELED': 'canceled',
     'PENDING': 'pending',
     'CLOSED': 'closed'
 }

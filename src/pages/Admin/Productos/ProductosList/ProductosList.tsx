@@ -2,7 +2,7 @@ import { Grid } from '../../../../components/Grid'
 import { useProductosListLogic } from './useProductosListLogic'
 
 
-const ProductosList = (): React.ReactElement => {
+const ProductosList: React.FC = (): React.ReactElement => {
   const { 
     handlerBtnNuevoClick, 
     handlerEditarClick, 
