@@ -1,7 +1,7 @@
 import { useEffect, useId, useState } from 'react'
 import { InfoPedidosInterface } from '../../interfaces/Pedidos/InfoPedidosInterface';
 
-export const UseCardMesa = (props: any) => {
+export const UseCardMesa = (props: any)  => {
     const { item } = props;
     const imgMesaId = useId();
     const [ info, setInfo ] = useState<InfoPedidosInterface | null>()

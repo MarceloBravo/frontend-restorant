@@ -3,7 +3,7 @@ import MesaRestorant2 from '../../assets/png/MesaRestorant2.png'
 import { UseCardMesa } from './UseCardMesa'
 import './CardMesa.scss'
 
-const CardMesa = (props: any) => {
+const CardMesa: React.FC = (props: any) => {
     const { handlerEditarClick } = props;
     const { item, imgMesaId, info } = UseCardMesa(props);
     
